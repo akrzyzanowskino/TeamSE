@@ -6,6 +6,7 @@ var deps = {
 		      'core/Events.js',
 		      'core/Browser.js',
 		      'geometry/Point.js',
+		      'geometry/Coordinate.js',
 		      'geometry/Bounds.js',
 		      'geometry/Transformation.js',
 		      'dom/DomUtil.js',

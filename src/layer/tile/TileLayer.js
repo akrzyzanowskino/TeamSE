@@ -78,7 +78,7 @@ L.TileLayer = L.GridLayer.extend({
 			s: this._getSubdomain(coords),
 			x: coords.x,
 			y: this.options.tms ? this._tileNumBounds.max.y - coords.y : coords.y,
-			z: this._getZoomForUrl()
+			z: this._getZoomForUrl(coords.z)
 		}, this.options));
 	},
 
@@ -109,13 +109,11 @@ L.TileLayer = L.GridLayer.extend({
 	_onTileRemove: function (e) {
 		e.tile.onload = null;
 		e.tile.src = L.Util.emptyImageUrl;
-		console.log('hello');
 	},
 
-	_getZoomForUrl: function () {
+	_getZoomForUrl: function (zoom) {
 
-		var options = this.options,
-		    zoom = this._tileZoom;
+		var options = this.options;
 
 		if (options.zoomReverse) {
 			zoom = options.maxZoom - zoom;
