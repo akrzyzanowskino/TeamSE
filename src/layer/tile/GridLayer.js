@@ -196,31 +196,30 @@ L.GridLayer = L.Layer.extend({
 			return p;
 		}
 
-		console.log(this._tileZoom, this._levels, this._levels[this._tileZoom]);
 		if (!this._levels[this._tileZoom]) {
 			return false;
 		}
 
 		var nativeTiles = this._levels[this._tileZoom].tiles,
 			scaledTiles = this._levels[z].tiles,
-			scaledCoords = map(map(keys(scaledTiles), this._keyToTileCoords), L.bind(zoomCoord, this));
+			scaledCoords = map(map(keys(scaledTiles), this._keyToTileCoords), L.bind(zoomCoord, this)),
+			bounds = this._getTileRange(this._map.getBounds(), this._tileZoom);
 
 		if (z < this._tileZoom) {
-			console.log('pruning', z);
-			return !map(scaledCoords, L.bind(function (scaled) {
-				if (this._tileCoordsToKey(scaled) in nativeTiles) {
-					console.log('removing scaled');
+			var removeUpperTiles = L.bind(function (scaled) {
+				if (this._tileCoordsToKey(scaled) in nativeTiles ||
+					!bounds.contains(scaled)) {
 					var tile = this._levels[z].tiles[this._tileCoordsToKey(scaled.coord)];
 					L.DomUtil.remove(tile);
 					this.fire('tileunload', {tile: tile});
 				} else { return scaled; }
-			}, this)).length;
+			}, this);
+			return !map(scaledCoords, removeUpperTiles).length;
 		} else if (z > this._tileZoom) {
-			var subs = Math.pow(4, z - this._tileZoom);
-			var neededSubs = {};
-			return !map(scaledCoords, L.bind(function (scaled) {
+			var subs = Math.pow(4, z - this._tileZoom), neededSubs = {};
+			var removeSubTiles = L.bind(function (scaled) {
 				var key = this._tileCoordsToKey(scaled);
-				if (key in nativeTiles) {
+				if (key in nativeTiles || !this._isValidTile(scaled)) {
 					if (typeof neededSubs[key] === 'undefined') { neededSubs[key] = subs; }
 					if (!--neededSubs[key].subs) {
 						var tile = this._levels[z].tiles[this._tileCoordsToKey(scaled.coord)];
@@ -228,7 +227,8 @@ L.GridLayer = L.Layer.extend({
 						this.fire('tileunload', {tile: tile});
 					}
 				} else { return scaled;	}
-			}, this)).length;
+			}, this);
+			return !map(scaledCoords, removeSubTiles).length;
 		}
 	},
 
