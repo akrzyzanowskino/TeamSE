@@ -203,32 +203,46 @@ L.GridLayer = L.Layer.extend({
 		var nativeTiles = this._levels[this._tileZoom].tiles,
 			scaledTiles = this._levels[z].tiles,
 			scaledCoords = map(map(keys(scaledTiles), this._keyToTileCoords), L.bind(zoomCoord, this)),
-			bounds = this._getTileRange(this._map.getBounds(), this._tileZoom);
+			bounds = this._getTileRange(this._map.getBounds(), this._tileZoom),
+			scaled, i, key, that = this, delay = 500;
+
+		function deferRemove(key, z) {
+			return function () {
+				var tile = that._levels[z].tiles[key];
+				L.DomUtil.remove(tile);
+				that.fire('tileunload', {tile: tile});
+				delete that._levels[z].tiles[key];
+			};
+		}
 
 		if (z < this._tileZoom) {
-			var removeUpperTiles = L.bind(function (scaled) {
-				if (this._tileCoordsToKey(scaled) in nativeTiles ||
+			for (i = 0; i < scaledCoords.length; i++) {
+				scaled = scaledCoords[i];
+				key = this._tileCoordsToKey(scaled);
+				if ((key in nativeTiles && nativeTiles[key].complete) ||
 					!bounds.contains(scaled)) {
-					var tile = this._levels[z].tiles[this._tileCoordsToKey(scaled.coord)];
-					L.DomUtil.remove(tile);
-					this.fire('tileunload', {tile: tile});
-				} else { return scaled; }
-			}, this);
-			return !map(scaledCoords, removeUpperTiles).length;
+
+					key = this._tileCoordsToKey(scaled.coord);
+					setTimeout(deferRemove(z, key), delay);
+
+				}
+			}
 		} else if (z > this._tileZoom) {
 			var subs = Math.pow(4, z - this._tileZoom), neededSubs = {};
-			var removeSubTiles = L.bind(function (scaled) {
-				var key = this._tileCoordsToKey(scaled);
-				if (key in nativeTiles || !this._isValidTile(scaled)) {
+			for (i = 0; i < scaledCoords.length; i++) {
+				scaled = scaledCoords[i];
+				key = this._tileCoordsToKey(scaled);
+				if ((key in nativeTiles && nativeTiles[key].complete) ||
+					!bounds.contains(scaled)) {
 					if (typeof neededSubs[key] === 'undefined') { neededSubs[key] = subs; }
 					if (!--neededSubs[key].subs) {
-						var tile = this._levels[z].tiles[this._tileCoordsToKey(scaled.coord)];
-						L.DomUtil.remove(tile);
-						this.fire('tileunload', {tile: tile});
+
+						key = this._tileCoordsToKey(scaled.coord);
+						setTimeout(deferRemove(z, key), delay);
+
 					}
-				} else { return scaled;	}
-			}, this);
-			return !map(scaledCoords, removeSubTiles).length;
+				}
+			}
 		}
 	},
 
@@ -241,16 +255,8 @@ L.GridLayer = L.Layer.extend({
 				this._destroyLevel(this._levels[z]);
 				delete this._levels[z];
 			} else {
-                if (z !== zoom) {
-                    if (this._pruneTiles(z)) {
-                        this._destroyLevel(this._levels[z]);
-                        delete this._levels[z];
-                    } else {
-                        this._levels[z].el.style.zIndex = -Math.abs(zoom - z);
-                    }
-                } else {
-                    this._levels[z].el.style.zIndex = -Math.abs(zoom - z);
-                }
+                if (z !== zoom) { this._pruneTiles(z); }
+                this._levels[z].el.style.zIndex = -Math.abs(zoom - z);
 			}
 		}
 
