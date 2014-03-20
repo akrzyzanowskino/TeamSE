@@ -169,6 +169,65 @@ L.GridLayer = L.Layer.extend({
 		this.getPane().appendChild(this._container);
 	},
 
+	_pruneTiles: function (z) {
+		function keys(_) {
+			var l = [];
+			for (var k in _) { l.push(k); }
+			return l;
+		}
+
+		function map(_, fn) {
+			var l = [];
+			for (var i = 0; i < _.length; i++) {
+				var val = fn(_[i]);
+				if (val) { l.push(val); }
+			}
+			return l;
+		}
+
+		function zoomCoord(_) {
+			var power = Math.pow(2, this._tileZoom - z),
+				p = new L.Point(Math.floor(_.x * power), Math.floor(_.y * power));
+			p.coord = _;
+			return p;
+		}
+
+		console.log(this._tileZoom, this._levels, this._levels[this._tileZoom]);
+		if (!this._levels[this._tileZoom]) {
+			return false;
+		}
+
+		var nativeTiles = this._levels[this._tileZoom].tiles,
+			scaledTiles = this._levels[z].tiles,
+			scaledCoords = map(map(keys(scaledTiles), this._keyToTileCoords), L.bind(zoomCoord, this));
+
+		if (z < this._tileZoom) {
+			console.log('pruning', z);
+			return !map(scaledCoords, L.bind(function (scaled) {
+				if (this._tileCoordsToKey(scaled) in nativeTiles) {
+					console.log('removing scaled');
+					var tile = this._levels[z].tiles[this._tileCoordsToKey(scaled.coord)];
+					L.DomUtil.remove(tile);
+					this.fire('tileunload', {tile: tile});
+				} else { return scaled; }
+			}, this)).length;
+		} else if (z > this._tileZoom) {
+			var subs = Math.pow(4, z - this._tileZoom);
+			var neededSubs = {};
+			return !map(scaledCoords, L.bind(function (scaled) {
+				var key = this._tileCoordsToKey(scaled);
+				if (key in nativeTiles) {
+					if (typeof neededSubs[key] === 'undefined') { neededSubs[key] = subs; }
+					if (!--neededSubs[key].subs) {
+						var tile = this._levels[z].tiles[this._tileCoordsToKey(scaled.coord)];
+						L.DomUtil.remove(tile);
+						this.fire('tileunload', {tile: tile});
+					}
+				} else { return scaled;	}
+			}, this)).length;
+		}
+	},
+
 	_updateLevels: function () {
 		var zoom = this._tileZoom;
 
@@ -178,7 +237,16 @@ L.GridLayer = L.Layer.extend({
 				this._destroyLevel(this._levels[z]);
 				delete this._levels[z];
 			} else {
-				this._levels[z].el.style.zIndex = -Math.abs(zoom - z);
+                if (z !== zoom) {
+                    if (this._pruneTiles(z)) {
+                        this._destroyLevel(this._levels[z]);
+                        delete this._levels[z];
+                    } else {
+                        this._levels[z].el.style.zIndex = -Math.abs(zoom - z);
+                    }
+                } else {
+                    this._levels[z].el.style.zIndex = -Math.abs(zoom - z);
+                }
 			}
 		}
 
@@ -479,6 +547,7 @@ L.GridLayer = L.Layer.extend({
 
 		if (this._tilesToLoad === 0) {
 			this.fire('load');
+			this._updateLevels();
 		}
 	},
 
