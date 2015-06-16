@@ -16,11 +16,14 @@ L.Map = L.Evented.extend({
 		fadeAnimation: true,
 		trackResize: true,
 		markerZoomAnimation: true,
-		maxBoundsViscosity: 0.0
+		maxBoundsViscosity: 0.0,
+		bearing: 0
 	},
 
 	initialize: function (id, options) { // (HTMLElement or String, Object)
 		options = L.setOptions(this, options);
+
+		if (options.bearing) { this._bearing = options.bearing; }
 
 		this._initContainer(id);
 		this._initLayout();
@@ -416,14 +419,19 @@ L.Map = L.Evented.extend({
 		return this.options.crs.pointToLatLng(L.point(point), zoom);
 	},
 
-	layerPointToLatLng: function (point) { // (Point)
+	layerPointToLatLng: function (point/*, rotate*/) { // (Point)
+		//// FIXME: Add branch for rotated panes
 		var projectedPoint = L.point(point).add(this.getPixelOrigin());
 		return this.unproject(projectedPoint);
 	},
 
-	latLngToLayerPoint: function (latlng) { // (LatLng)
+	latLngToLayerPoint: function (latlng/*, rotate*/) { // (LatLng)
 		var projectedPoint = this.project(L.latLng(latlng))._round();
-		return projectedPoint._subtract(this.getPixelOrigin());
+// 		if (!rotate) {
+			return projectedPoint._subtract(this.getPixelOrigin());
+// 		} else {
+// 			return projectedPoint._subtract(this.getPixelOrigin()).rotateFrom(this._bearing, this._getCenterLayerPoint());
+// 		}
 	},
 
 	wrapLatLng: function (latlng) {
@@ -435,11 +443,13 @@ L.Map = L.Evented.extend({
 	},
 
 	containerPointToLayerPoint: function (point) { // (Point)
-		return L.point(point).subtract(this._getMapPanePos());
+// 		return L.point(point).subtract(this._getMapPanePos());
+		return L.point(point).subtract(this._getMapPanePos()).rotateFrom(-this._bearing, this.getSize().divideBy(2));
 	},
 
 	layerPointToContainerPoint: function (point) { // (Point)
-		return L.point(point).add(this._getMapPanePos());
+// 		return L.point(point).add(this._getMapPanePos());
+		return L.point(point).add(this._getMapPanePos()).rotateFrom(this._bearing, this.getSize().divideBy(2));
 	},
 
 	containerPointToLatLng: function (point) {
@@ -462,6 +472,98 @@ L.Map = L.Evented.extend({
 	mouseEventToLatLng: function (e) { // (MouseEvent)
 		return this.layerPointToLatLng(this.mouseEventToLayerPoint(e));
 	},
+
+
+	// Rotation methods
+	setBearing: function(theta) {
+
+		console.log('old center: ', this.getCenter());
+		var oldPixelCenter = this.latLngToLayerPoint(this.getCenter());
+
+
+		var rotatePanePos = this._getRotatePanePos();
+
+		var halfSize = this.getSize().divideBy(2);
+
+		var pivot = this._getMapPanePos().clone().multiplyBy(-1).add(halfSize);
+
+		rotatePanePos = rotatePanePos.rotateFrom( -this._bearing, pivot );
+
+
+		/// DEBUG!!
+		L.DomUtil.setPosition(this._rotatePane, rotatePanePos);
+
+
+// 		var currCenterLatLng = this.containerPointToLatLng(this.getSize().divideBy(2));
+// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0));
+// 		this._lastCenter = currCenterLatLng;
+
+// 		L.DomUtil.setPosition(this._mapPane, new L.Point(0, 0));
+// 		this._pixelOrigin = this._getNewPixelOrigin(currCenterLatLng);
+// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0));
+// 		this._pixelOrigin = this._getNewPixelOrigin(this.getCenter());
+
+// 		var newBearing = theta * L.DomUtil.DEG_TO_RAD;
+
+// 		var halfSize = this.getSize().divideBy(2);
+
+// 		this._resetView(currCenterLatLng, this.getZoom());
+
+// 		console.log('Old, new pivots:', this._pivot, this._getCenterLayerPoint());
+
+// 		var pos = this._getMapPanePos(); //.multiplyBy(-1);
+// 		var panePos = new L.Point(0, 0); //.multiplyBy(-1);
+
+// 		var panePos = this._getMapPanePos().clone().multiplyBy(-1);
+// 		var panePos = this._getMapPanePos();
+// 		var panePos = this._getMapPanePos().rotateFrom( -newBearing, halfSize ).multiplyBy(-1);
+// 		panePos.y = -panePos.y;
+
+// 		var rotatePaneOffset = L.DomUtil.getPosition(this._rotatePane) || new L.Point(0, 0);
+// 		this._pivot   = this._getCenterLayerPoint();
+// 		var newPivot  = this.getSize().divideBy(2).add( panePos );
+// 		var newPivot  = this.getSize().divideBy(2).subtract( panePos );
+// 		var newPivot  = this.latLngToLayerPoint(this.getCenter()).subtract( panePos );
+// 		var newPivot  = this.getSize().divideBy(2);
+		// .subtract( panePos );
+
+// 		var offset = pos.rotateFrom(-this._bearing, this._pivot).rotate(newBearing, newPivot).multiplyBy(-1);
+//
+// 		console.log('offset: ', offset);
+// 		L.DomUtil.setPosition(this._mapPane, offset);
+
+// 		this._bearing = newBearing;
+		this._bearing = theta * L.DomUtil.DEG_TO_RAD;;
+		this._pivot = pivot;
+
+// 		var pos = new L.Point(0, 0);
+
+
+// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0), this._bearing, this.getSize().divideBy(2).subtract(this._getMapPanePos()));
+// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0), this._bearing, this.getSize().divideBy(2));
+		L.DomUtil.setPosition(this._rotatePane, rotatePanePos, this._bearing, pivot);
+
+		this._rotatePanePos = rotatePanePos.rotateFrom(this._bearing, pivot);
+
+		for (var i in this._layers) {
+			// Consider doing this in the markers instead.
+			if (this._layers[i].options.pane === 'markerPane') {
+				this._layers[i].update();
+			}
+		}
+		this.fire('rotate');
+// 		console.log('new center: ', this.getCenter());
+		var newPixelCenter = this.latLngToLayerPoint(this.getCenter());
+		console.log('new center: ', this.getCenter());
+		var offset = newPixelCenter.subtract(oldPixelCenter);
+		console.log('offset in pixels:', offset);
+
+	},
+
+	getBearing: function() {
+		return this._bearing || 0;
+	},
+
 
 
 	// map initialization methods
@@ -511,11 +613,15 @@ L.Map = L.Evented.extend({
 		this._mapPane = this.createPane('mapPane', this._container);
 		L.DomUtil.setPosition(this._mapPane, new L.Point(0, 0));
 
-		this.createPane('tilePane');
-		this.createPane('shadowPane');
-		this.createPane('overlayPane');
-		this.createPane('markerPane');
-		this.createPane('popupPane');
+		this._pivot = this.getSize().divideBy(2);
+		this._rotatePane = this.createPane('rotatePane', this._mapPane);
+		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0), this._bearing, this._pivot);
+
+		this.createPane('tilePane',    this._rotatePane);
+		this.createPane('shadowPane',  this._rotatePane);
+		this.createPane('overlayPane', this._rotatePane);
+		this.createPane('markerPane',  this._rotatePane);
+		this.createPane('popupPane',   this._rotatePane);
 
 		if (!this.options.markerZoomAnimation) {
 			L.DomUtil.addClass(panes.markerPane, 'leaflet-zoom-hide');
@@ -725,6 +831,10 @@ L.Map = L.Evented.extend({
 
 	_getMapPanePos: function () {
 		return L.DomUtil.getPosition(this._mapPane) || new L.Point(0, 0);
+	},
+
+	_getRotatePanePos: function () {
+		return this._rotatePanePos || new L.Point(0, 0);
 	},
 
 	_moved: function () {

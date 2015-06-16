@@ -120,6 +120,26 @@ L.Point.prototype = {
 		return 'Point(' +
 		        L.Util.formatNum(this.x) + ', ' +
 		        L.Util.formatNum(this.y) + ')';
+	},
+
+	rotate: function(theta) {
+		if (!theta) { return this; }
+		// Rotate around (0,0) by applying the 2D rotation matrix:
+		// [ x ] = [ x ] [ cos θ  -sin θ ]
+		// [ y ] = [ y ] [ sin θ   cos θ ]
+		// Theta must be given in radians.
+		var sinTheta = Math.sin(theta);
+		var cosTheta = Math.cos(theta);
+
+		return new L.Point(
+			this.x * cosTheta - this.y * sinTheta,
+			this.x * sinTheta + this.y * cosTheta
+		);
+	},
+
+	rotateFrom: function(theta, pivot) {
+		if (!theta) { return this; }
+		return this.clone().subtract(pivot).rotate(theta).add(pivot);
 	}
 };
 

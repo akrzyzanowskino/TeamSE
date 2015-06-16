@@ -94,7 +94,7 @@ L.Marker = L.Layer.extend({
 	update: function () {
 
 		if (this._icon) {
-			var pos = this._map.latLngToLayerPoint(this._latlng).round();
+			var pos = this._map.latLngToLayerPoint(this._latlng, true).round();
 			this._setPos(pos);
 		}
 
@@ -188,7 +188,9 @@ L.Marker = L.Layer.extend({
 	},
 
 	_setPos: function (pos) {
-		L.DomUtil.setPosition(this._icon, pos);
+		var anchor = this.options.icon.options.iconAnchor;
+		L.DomUtil.setPosition(this._icon, pos, -this._map._bearing, pos.add(anchor));
+// 		L.DomUtil.setPosition(this._icon, pos);
 
 		if (this._shadow) {
 			L.DomUtil.setPosition(this._shadow, pos);
