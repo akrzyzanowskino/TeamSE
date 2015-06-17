@@ -444,12 +444,23 @@ L.Map = L.Evented.extend({
 
 	containerPointToLayerPoint: function (point) { // (Point)
 // 		return L.point(point).subtract(this._getMapPanePos());
-		return L.point(point).subtract(this._getMapPanePos()).rotateFrom(-this._bearing, this.getSize().divideBy(2));
+// 		return L.point(point).subtract(this._getMapPanePos()).rotateFrom(-this._bearing, this._getRotatePanePos());
+
+		return L.point(point)
+			.subtract(this._getMapPanePos())
+			.rotateFrom(-this._bearing, this._getRotatePanePos())
+			.subtract(this._getRotatePanePos())
+			;
 	},
 
 	layerPointToContainerPoint: function (point) { // (Point)
 // 		return L.point(point).add(this._getMapPanePos());
-		return L.point(point).add(this._getMapPanePos()).rotateFrom(this._bearing, this.getSize().divideBy(2));
+// 		return L.point(point).add(this._getMapPanePos()).rotateFrom(this._bearing, this._getRotatePanePos());
+		return L.point(point)
+			.add(this._getRotatePanePos())
+			.rotateFrom(this._bearing, this._getRotatePanePos())
+			.add(this._getMapPanePos())
+			;
 	},
 
 	containerPointToLatLng: function (point) {
@@ -476,74 +487,18 @@ L.Map = L.Evented.extend({
 
 	// Rotation methods
 	setBearing: function(theta) {
-
-		console.log('old center: ', this.getCenter());
-		var oldPixelCenter = this.latLngToLayerPoint(this.getCenter());
-
+		if (!L.Browser.any3d) { return; }
 
 		var rotatePanePos = this._getRotatePanePos();
-
 		var halfSize = this.getSize().divideBy(2);
+		this._pivot = this._getMapPanePos().clone().multiplyBy(-1).add(halfSize);
 
-		var pivot = this._getMapPanePos().clone().multiplyBy(-1).add(halfSize);
+		rotatePanePos = rotatePanePos.rotateFrom( -this._bearing, this._pivot );
 
-		rotatePanePos = rotatePanePos.rotateFrom( -this._bearing, pivot );
-
-
-		/// DEBUG!!
-		L.DomUtil.setPosition(this._rotatePane, rotatePanePos);
-
-
-// 		var currCenterLatLng = this.containerPointToLatLng(this.getSize().divideBy(2));
-// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0));
-// 		this._lastCenter = currCenterLatLng;
-
-// 		L.DomUtil.setPosition(this._mapPane, new L.Point(0, 0));
-// 		this._pixelOrigin = this._getNewPixelOrigin(currCenterLatLng);
-// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0));
-// 		this._pixelOrigin = this._getNewPixelOrigin(this.getCenter());
-
-// 		var newBearing = theta * L.DomUtil.DEG_TO_RAD;
-
-// 		var halfSize = this.getSize().divideBy(2);
-
-// 		this._resetView(currCenterLatLng, this.getZoom());
-
-// 		console.log('Old, new pivots:', this._pivot, this._getCenterLayerPoint());
-
-// 		var pos = this._getMapPanePos(); //.multiplyBy(-1);
-// 		var panePos = new L.Point(0, 0); //.multiplyBy(-1);
-
-// 		var panePos = this._getMapPanePos().clone().multiplyBy(-1);
-// 		var panePos = this._getMapPanePos();
-// 		var panePos = this._getMapPanePos().rotateFrom( -newBearing, halfSize ).multiplyBy(-1);
-// 		panePos.y = -panePos.y;
-
-// 		var rotatePaneOffset = L.DomUtil.getPosition(this._rotatePane) || new L.Point(0, 0);
-// 		this._pivot   = this._getCenterLayerPoint();
-// 		var newPivot  = this.getSize().divideBy(2).add( panePos );
-// 		var newPivot  = this.getSize().divideBy(2).subtract( panePos );
-// 		var newPivot  = this.latLngToLayerPoint(this.getCenter()).subtract( panePos );
-// 		var newPivot  = this.getSize().divideBy(2);
-		// .subtract( panePos );
-
-// 		var offset = pos.rotateFrom(-this._bearing, this._pivot).rotate(newBearing, newPivot).multiplyBy(-1);
-//
-// 		console.log('offset: ', offset);
-// 		L.DomUtil.setPosition(this._mapPane, offset);
-
-// 		this._bearing = newBearing;
 		this._bearing = theta * L.DomUtil.DEG_TO_RAD;;
-		this._pivot = pivot;
+		this._rotatePanePos = rotatePanePos.rotateFrom(this._bearing, this._pivot);
 
-// 		var pos = new L.Point(0, 0);
-
-
-// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0), this._bearing, this.getSize().divideBy(2).subtract(this._getMapPanePos()));
-// 		L.DomUtil.setPosition(this._rotatePane, new L.Point(0, 0), this._bearing, this.getSize().divideBy(2));
-		L.DomUtil.setPosition(this._rotatePane, rotatePanePos, this._bearing, pivot);
-
-		this._rotatePanePos = rotatePanePos.rotateFrom(this._bearing, pivot);
+		L.DomUtil.setPosition(this._rotatePane, this._rotatePanePos, this._bearing, this._rotatePanePos);
 
 		for (var i in this._layers) {
 			// Consider doing this in the markers instead.
@@ -552,12 +507,6 @@ L.Map = L.Evented.extend({
 			}
 		}
 		this.fire('rotate');
-// 		console.log('new center: ', this.getCenter());
-		var newPixelCenter = this.latLngToLayerPoint(this.getCenter());
-		console.log('new center: ', this.getCenter());
-		var offset = newPixelCenter.subtract(oldPixelCenter);
-		console.log('offset in pixels:', offset);
-
 	},
 
 	getBearing: function() {
@@ -850,8 +799,18 @@ L.Map = L.Evented.extend({
 	},
 
 	_getNewPixelOrigin: function (center, zoom) {
+
 		var viewHalf = this.getSize()._divideBy(2);
-		return this.project(center, zoom)._subtract(viewHalf)._add(this._getMapPanePos())._round();
+
+		return this.project(center, zoom)
+			.rotate(this._bearing)
+			._subtract(viewHalf)
+			._add(this._getMapPanePos())
+			.add(this._getRotatePanePos())
+			.rotate(-this._bearing)
+			._round();
+//
+
 	},
 
 	_latLngToNewLayerPoint: function (latlng, zoom, center) {
