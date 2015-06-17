@@ -87,7 +87,7 @@ L.Draggable = L.Evented.extend({
 		    offset = newPoint.subtract(this._startPoint),
 		    bearing = this._mapBearing || 0;
 
-		console.log(offset, bearing, offset.rotate(bearing));
+// 		console.log(offset, bearing, offset.rotate(bearing));
 		if (bearing) {
 			offset = offset.rotate(-bearing);
 		}

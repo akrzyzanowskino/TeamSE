@@ -63,7 +63,15 @@
 		marker4.bindPopup(loremIpsum + '<p>DF</p>').addTo(map);
 		marker5.bindPopup(loremIpsum + '<p>Trd</p>').addTo(map);
 
+		function rotate(ev) {
+			if (ev.buttons === 0) return;
+			var angle = ev.target.valueAsNumber;
+// 			console.log(angle);
+			map.setBearing(angle);
+		}
 
+		document.getElementById('rho_input').addEventListener('change', rotate);
+		document.getElementById('rho_input').addEventListener('mousemove', rotate);
 
 	</script>
 </body>
