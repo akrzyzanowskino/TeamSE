@@ -43,6 +43,10 @@ L.Draggable = L.Evented.extend({
 		this._moved = false;
 	},
 
+	updateMapBearing: function(mapBearing) {
+		this._mapBearing = mapBearing;
+	},
+
 	_onDown: function (e) {
 		this._moved = false;
 
@@ -80,7 +84,13 @@ L.Draggable = L.Evented.extend({
 
 		var first = (e.touches && e.touches.length === 1 ? e.touches[0] : e),
 		    newPoint = new L.Point(first.clientX, first.clientY),
-		    offset = newPoint.subtract(this._startPoint);
+		    offset = newPoint.subtract(this._startPoint),
+		    bearing = this._mapBearing || 0;
+
+		console.log(offset, bearing, offset.rotate(bearing));
+		if (bearing) {
+			offset = offset.rotate(-bearing);
+		}
 
 		if (!offset.x && !offset.y) { return; }
 		if (L.Browser.touch && Math.abs(offset.x) + Math.abs(offset.y) < 3) { return; }

@@ -419,19 +419,14 @@ L.Map = L.Evented.extend({
 		return this.options.crs.pointToLatLng(L.point(point), zoom);
 	},
 
-	layerPointToLatLng: function (point/*, rotate*/) { // (Point)
-		//// FIXME: Add branch for rotated panes
+	layerPointToLatLng: function (point) { // (Point)
 		var projectedPoint = L.point(point).add(this.getPixelOrigin());
 		return this.unproject(projectedPoint);
 	},
 
 	latLngToLayerPoint: function (latlng/*, rotate*/) { // (LatLng)
 		var projectedPoint = this.project(L.latLng(latlng))._round();
-// 		if (!rotate) {
-			return projectedPoint._subtract(this.getPixelOrigin());
-// 		} else {
-// 			return projectedPoint._subtract(this.getPixelOrigin()).rotateFrom(this._bearing, this._getCenterLayerPoint());
-// 		}
+		return projectedPoint._subtract(this.getPixelOrigin());
 	},
 
 	wrapLatLng: function (latlng) {
@@ -495,7 +490,7 @@ L.Map = L.Evented.extend({
 
 		rotatePanePos = rotatePanePos.rotateFrom( -this._bearing, this._pivot );
 
-		this._bearing = theta * L.DomUtil.DEG_TO_RAD;;
+		this._bearing = theta * L.DomUtil.DEG_TO_RAD;
 		this._rotatePanePos = rotatePanePos.rotateFrom(this._bearing, this._pivot);
 
 		L.DomUtil.setPosition(this._rotatePane, this._rotatePanePos, this._bearing, this._rotatePanePos);
@@ -510,7 +505,7 @@ L.Map = L.Evented.extend({
 	},
 
 	getBearing: function() {
-		return this._bearing || 0;
+		return (this._bearing || 0) * L.DomUtil.RAD_TO_DEG;
 	},
 
 
@@ -809,8 +804,6 @@ L.Map = L.Evented.extend({
 			.add(this._getRotatePanePos())
 			.rotate(-this._bearing)
 			._round();
-//
-
 	},
 
 	_latLngToNewLayerPoint: function (latlng, zoom, center) {
