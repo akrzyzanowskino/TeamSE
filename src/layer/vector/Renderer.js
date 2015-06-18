@@ -73,8 +73,8 @@ L.Renderer = L.Layer.extend({
 		var p = this.options.padding,
 		    map = this._map,
 		    size = this._map.getSize(),
-		    padMin = size.multiplyBy(-p);
-		    padMax = size.multiplyBy(1 + p);
+		    padMin = size.multiplyBy(-p),
+		    padMax = size.multiplyBy(1 + p),
 		    //// TODO: Somehow refactor this out into map.something() - the code is
 		    ////   pretty much the same as in GridLayer.
 		    clip = new L.Bounds([

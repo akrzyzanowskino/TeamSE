@@ -488,7 +488,7 @@ L.Map = L.Evented.extend({
 		var halfSize = this.getSize().divideBy(2);
 		this._pivot = this._getMapPanePos().clone().multiplyBy(-1).add(halfSize);
 
-		rotatePanePos = rotatePanePos.rotateFrom( -this._bearing, this._pivot );
+		rotatePanePos = rotatePanePos.rotateFrom(-this._bearing, this._pivot);
 
 		this._bearing = theta * L.DomUtil.DEG_TO_RAD;
 		this._rotatePanePos = rotatePanePos.rotateFrom(this._bearing, this._pivot);

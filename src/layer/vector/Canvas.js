@@ -19,7 +19,7 @@ L.Canvas = L.Renderer.extend({
 	onRemove: function() {
 		L.Renderer.prototype.onRemove.call(this);
 		this._map.off('rotate', this._redraw, this);
-	}
+	},
 
 	_initContainer: function () {
 		var container = this._container = document.createElement('canvas');

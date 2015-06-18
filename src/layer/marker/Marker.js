@@ -189,8 +189,8 @@ L.Marker = L.Layer.extend({
 	},
 
 	_setPos: function (pos) {
-		var anchor = this.options.icon.options.iconAnchor;
-		L.DomUtil.setPosition(this._icon, pos, -this._map._bearing, pos.add(anchor));
+		var anchor = this.options.icon.options.iconAnchor || new L.Point(0, 0);
+		L.DomUtil.setPosition(this._icon, pos, -this._map._bearing || 0, pos.add(anchor));
 // 		L.DomUtil.setPosition(this._icon, pos);
 
 		if (this._shadow) {

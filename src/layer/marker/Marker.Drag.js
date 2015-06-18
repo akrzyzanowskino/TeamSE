@@ -5,7 +5,7 @@
 L.Handler.MarkerDrag = L.Handler.extend({
 	initialize: function (marker) {
 		this._marker = marker;
-},
+	},
 
 	addHooks: function () {
 		var icon = this._marker._icon;
@@ -55,7 +55,7 @@ L.Handler.MarkerDrag = L.Handler.extend({
 
 		if (this._marker._map._bearing) {
 			var anchor = marker.options.icon.options.iconAnchor;
-			L.DomUtil.setPosition(marker._icon, iconPos, -marker._map._bearing, iconPos.add(anchor))
+			L.DomUtil.setPosition(marker._icon, iconPos, -marker._map._bearing, iconPos.add(anchor));
 		}
 
 		// update shadow position

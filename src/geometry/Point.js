@@ -125,8 +125,8 @@ L.Point.prototype = {
 	rotate: function(theta) {
 		if (!theta) { return this; }
 		// Rotate around (0,0) by applying the 2D rotation matrix:
-		// [ x ] = [ x ] [ cos θ  -sin θ ]
-		// [ y ] = [ y ] [ sin θ   cos θ ]
+		// ⎡ x' ⎤ = ⎡ cos θ  -sin θ ⎤ ⎡ x ⎤
+		// ⎣ y' ⎦   ⎣ sin θ   cos θ ⎦ ⎣ y ⎦
 		// Theta must be given in radians.
 		var sinTheta = Math.sin(theta);
 		var cosTheta = Math.cos(theta);
