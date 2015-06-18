@@ -424,7 +424,7 @@ L.Map = L.Evented.extend({
 		return this.unproject(projectedPoint);
 	},
 
-	latLngToLayerPoint: function (latlng/*, rotate*/) { // (LatLng)
+	latLngToLayerPoint: function (latlng) { // (LatLng)
 		var projectedPoint = this.project(L.latLng(latlng))._round();
 		return projectedPoint._subtract(this.getPixelOrigin());
 	},
