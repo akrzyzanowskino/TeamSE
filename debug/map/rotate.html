@@ -11,6 +11,7 @@
 
 	<script type="text/javascript" src="../../build/deps.js"></script>
 	<script src="../leaflet-include.js"></script>
+	<script src="../vector/route.js"></script>
 
 	<style>
 	td {
@@ -132,9 +133,19 @@
 			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
 
+
+		for (var i = 0, latlngs = [], len = route.length; i < len; i++) {
+			latlngs.push(new L.LatLng(route[i][0], route[i][1]));
+		}
+		var path = new L.Polyline(latlngs, {
+			renderer: L.canvas()
+		});
+
+
 		var map = L.map('map')	//, {bearing: Math.PI / 4})
 				.setView([55, 10], 0)
-				.addLayer(osm);
+				.addLayer(osm)
+				.addLayer(path);
 
 		var marker1 = L.marker(kyiv).addTo(map),
 			marker2 = L.marker(lnd).addTo(map);

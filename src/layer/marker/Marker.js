@@ -30,6 +30,7 @@ L.Marker = L.Layer.extend({
 
 		this._initIcon();
 		this.update();
+		map.on('rotate', this.update, this);
 	},
 
 	onRemove: function () {

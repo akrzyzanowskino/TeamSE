@@ -4,14 +4,22 @@
 
 L.Canvas = L.Renderer.extend({
 
-	onAdd: function () {
-		L.Renderer.prototype.onAdd.call(this);
+	onAdd: function (map) {
+		L.Renderer.prototype.onAdd.call(this, map);
 
 		this._layers = this._layers || {};
 
 		// redraw vectors since canvas is cleared upon removal
 		this._draw();
+
+		// When rotating the canvas itself, it is cleared by some weird reason, so redraw.
+		map.on('rotate', this._redraw, this);
 	},
+
+	onRemove: function() {
+		L.Renderer.prototype.onRemove.call(this);
+		this._map.off('rotate', this._redraw, this);
+	}
 
 	_initContainer: function () {
 		var container = this._container = document.createElement('canvas');

@@ -16,7 +16,7 @@ L.Renderer = L.Layer.extend({
 		L.stamp(this);
 	},
 
-	onAdd: function () {
+	onAdd: function (map) {
 		if (!this._container) {
 			this._initContainer(); // defined by renderer implementations
 
@@ -24,13 +24,15 @@ L.Renderer = L.Layer.extend({
 				L.DomUtil.addClass(this._container, 'leaflet-zoom-animated');
 			}
 		}
-
 		this.getPane().appendChild(this._container);
+
 		this._update();
+		map.on('rotate', this._update, this);
 	},
 
 	onRemove: function () {
 		L.DomUtil.remove(this._container);
+		this._map.off('rotate', this._update, this);
 	},
 
 	getEvents: function () {
@@ -69,12 +71,24 @@ L.Renderer = L.Layer.extend({
 	_update: function () {
 		// update pixel bounds of renderer container (for positioning/sizing/clipping later)
 		var p = this.options.padding,
+		    map = this._map,
 		    size = this._map.getSize(),
-		    min = this._map.containerPointToLayerPoint(size.multiplyBy(-p)).round();
+		    padMin = size.multiplyBy(-p);
+		    padMax = size.multiplyBy(1 + p);
+		    //// TODO: Somehow refactor this out into map.something() - the code is
+		    ////   pretty much the same as in GridLayer.
+		    clip = new L.Bounds([
+		        map.containerPointToLayerPoint([padMin.x, padMin.y]).floor(),
+		        map.containerPointToLayerPoint([padMin.x, padMax.y]).floor(),
+		        map.containerPointToLayerPoint([padMax.x, padMin.y]).floor(),
+		        map.containerPointToLayerPoint([padMax.x, padMax.y]).floor()
+		    ]);
+// 		    min = this._map.containerPointToLayerPoint(size.multiplyBy(-p)).round();
 
-		this._bounds = new L.Bounds(min, min.add(size.multiplyBy(1 + p * 2)).round());
+// 		this._bounds = new L.Bounds(min, min.add(size.multiplyBy(1 + p * 2)).round());
+		this._bounds = clip;
 
-		this._topLeft = this._map.layerPointToLatLng(min);
+		this._topLeft = this._map.layerPointToLatLng(clip.min);
 		this._zoom = this._map.getZoom();
 	}
 });
