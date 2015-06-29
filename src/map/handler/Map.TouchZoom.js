@@ -22,7 +22,8 @@ L.Map.TouchZoom = L.Handler.extend({
 		if (!e.touches || e.touches.length !== 2 || map._animatingZoom || this._zooming) { return; }
 
 		var p1 = map.mouseEventToContainerPoint(e.touches[0]),
-		    p2 = map.mouseEventToContainerPoint(e.touches[1]);
+		    p2 = map.mouseEventToContainerPoint(e.touches[1]),
+		    vector = p1.subtract(p2);
 
 		this._centerPoint = map.getSize()._divideBy(2);
 		this._startLatLng = map.containerPointToLatLng(this._centerPoint);
@@ -32,6 +33,8 @@ L.Map.TouchZoom = L.Handler.extend({
 
 		this._startDist = p1.distanceTo(p2);
 		this._startZoom = map.getZoom();
+		this._startTheta = Math.atan(vector.x / vector.y);
+		this._startBearing = map.getBearing();
 
 		this._moved = false;
 		this._zooming = true;
@@ -51,8 +54,10 @@ L.Map.TouchZoom = L.Handler.extend({
 		var map = this._map,
 		    p1 = map.mouseEventToContainerPoint(e.touches[0]),
 		    p2 = map.mouseEventToContainerPoint(e.touches[1]),
-		    scale = p1.distanceTo(p2) / this._startDist;
 
+		    vector = p1.subtract(p2),
+		    scale = p1.distanceTo(p2) / this._startDist,
+		    delta;
 
 		this._zoom = map.getScaleZoom(scale, this._startZoom);
 
@@ -65,6 +70,15 @@ L.Map.TouchZoom = L.Handler.extend({
 			if (scale === 1 && delta.x === 0 && delta.y === 0) { return; }
 			this._center = map.unproject(map.project(this._pinchStartLatLng).subtract(delta));
 		}
+
+		var theta = Math.atan(vector.x / vector.y);
+		var bearingDelta = (theta - this._startTheta) * L.DomUtil.RAD_TO_DEG;
+		if (bearingDelta) {
+			map.setBearing( this._startBearing - bearingDelta );
+			console.log(bearingDelta, this._startBearing );
+		}
+
+		if (scale === 1 && delta.x === 0 && delta.y === 0) { return; }
 
 		if (!map.options.bounceAtZoomLimits) {
 			if ((this._zoom <= map.getMinZoom() && scale < 1) ||

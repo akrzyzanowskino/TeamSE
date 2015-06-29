@@ -481,7 +481,7 @@ L.Map = L.Evented.extend({
 
 
 	// Rotation methods
-	setBearing: function(theta) {
+	setBearing: function(theta, skipEvent) {
 		if (!L.Browser.any3d) { return; }
 
 		var rotatePanePos = this._getRotatePanePos();
@@ -501,7 +501,12 @@ L.Map = L.Evented.extend({
 				this._layers[i].update();
 			}
 		}
-		this.fire('rotate');
+
+		// We don't want to fire the rotate event on every frame of a touchscreen
+		//   gesture
+		if (skipEvent) {
+			this.fire('rotate');
+		}
 	},
 
 	getBearing: function() {
