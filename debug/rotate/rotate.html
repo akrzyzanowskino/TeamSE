@@ -142,7 +142,7 @@
 		});
 
 
-		var map = L.map('map')	//, {bearing: Math.PI / 4})
+		var map = L.map('map', {rotate: true})
 				.setView([55, 10], 0)
 				.addLayer(osm)
 				.addLayer(path);
