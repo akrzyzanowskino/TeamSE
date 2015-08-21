@@ -147,6 +147,10 @@
 					// New state is follow device orientation
 					this._follow = true;
 					L.DomEvent.on(window, 'deviceorientation', this._onDeviceOrientation, this);
+// 					L.DomEvent.once(window, 'deviceorientation', function(ev){
+// 						console.log('absolute orientation:', ev.absolute);
+// 						console.log('orientation event', ev);
+// 					});
 				}
 			} else {
 				// New state is rotation enabled
@@ -177,8 +181,15 @@
 		},
 
 		_unthrottledOnDeviceOrientation: function(ev) {
+
+			if (ev.absolute) {
+// 				console.log('Absolute orientation alpha:', ev.alpha);
+				this._map.setBearing(ev.alpha);
+				return;
+			}
+
 			if (this._alpha === undefined) {
-				// Just store initial alpha
+				// Just store initial alpha. Ignore the first event.
 				this._alpha = ev.alpha;
 				return;
 			}
