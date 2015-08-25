@@ -21,7 +21,14 @@
 			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
 
-		var map = new L.Map('map', {zoom: 15, layers: [osm], rotate: true});
+		var map = new L.Map('map', {
+			zoom: 15,
+			layers: [osm],
+			rotate: true,
+			touchRotate: true
+		});
+
+		map.compassBearing.enable();
 
 		function logEvent(e) { console.log(e.type); }
 
@@ -35,8 +42,8 @@
 
 		}
 
-		map.on('locationerror', logEvent);
-		map.on('locationfound', logEvent);
+// 		map.on('locationerror', logEvent);
+// 		map.on('locationfound', logEvent);
 		map.on('locationfound', resetHeading);
 
 		window.setInterval( function(){
