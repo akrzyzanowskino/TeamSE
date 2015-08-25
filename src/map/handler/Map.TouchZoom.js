@@ -120,14 +120,11 @@ L.Map.TouchZoom = L.Handler.extend({
 		var zoom = this._zoom;
 		zoom = this._map._limitZoom(zoom - this._startZoom > 0 ? Math.ceil(zoom) : Math.floor(zoom));
 
-
-<<<<<<< e10f66b6fca9e02d48a5eb3c01fae7b6131fa9d1
 		this._map._animateZoom(this._center, zoom, true, true);
-=======
+		
 		if (this._rotated) {
 			this._map.setBearing(this._map.getBearing());
 		}
->>>>>>> Map rotation: more/better events, moved debug pages, added demo rotation control.
 	}
 });
 
