@@ -59,7 +59,7 @@
 	// Unlocked (user can pinch-rotate)
 	// Follow (rotation follows device orientation, if available)
 
-	L.Control.RotateLock = L.Control.extend({
+	L.Control.Bearing = L.Control.extend({
 
 		options: {
 			position: 'topleft',
@@ -120,9 +120,11 @@
 
 			if (!map) { return; }
 
-			if (!map.touchRotate.enabled()) {
+			if (!map.touchRotate.enabled() && !map.compassBearing.enabled()) {
 				// Go from disabled to touch
 				map.touchRotate.enable();
+
+// 				console.log('state is now: touch rotate');
 			} else {
 
 				if (!map.compassBearing.enabled()) {
@@ -130,11 +132,20 @@
 					map.touchRotate.disable();
 					map.compassBearing.enable();
 
+// 					console.log('state is now: compass');
+
 					// It is possible that compass is not supported. If so,
 					// the hangler will automatically go from compass to disabled.
 				} else {
 					// Go from compass to disabled
-					map.compassBearing.disabled();
+					map.compassBearing.disable();
+
+// 					console.log('state is now: locked');
+
+					map.setBearing(0);
+					if (this.options.closeOnZeroBearing) {
+						map.touchRotate.enable();
+					}
 				}
 			}
 			this._restyle();
@@ -145,22 +156,26 @@
 				var bearing = this._map.getBearing();
 				this._link.style.color = 'inherit';
 				if (this.options.closeOnZeroBearing && bearing) {
-					this._link.style.display = 'block';
+					this._container.style.display = 'block';
 				}
 
 				var cssTransform = 'rotate(' + bearing + 'deg)';
 				this._glyphs.style.transform = cssTransform;
 
-				if (this._follow) {
+				if (map.compassBearing.enabled()) {
 					this._glyphs.style.color = 'orange';
-				} else {
+				} else if (map.touchRotate.enabled()){
 					this._glyphs.style.color = 'inherit';
+				} else {
+					this._glyphs.style.color = 'grey';
+					if (this.options.closeOnZeroBearing && map.getBearing() === 0) {
+						this._container.style.display = 'none';
+					}
 				}
 			} else {
-				this._link.style.color = '#bbb';
+				L.DomUtil.addClass(link, 'leaflet-disabled');
 			}
 		}
-
 	});
 
 
@@ -169,11 +184,15 @@
 			osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
 			osm = L.tileLayer(osmUrl, {maxZoom: 17, attribution: osmAttrib, rotate:true});
 
-		var map = new L.Map('map', {zoom: 15, layers: [osm], rotate: true}).setView([63.41, 10.41], 17);
+		var map = new L.Map('map', {
+			zoom: 15,
+			layers: [osm],
+			rotate: true
+		}).setView([63.41, 10.41], 17);
 
-		map.touchRotate.enable();
+// 		map.touchRotate.enable();
 
-		map.addControl(rotateControl = new L.Control.RotateLock());
+		map.addControl(bearingControl = new L.Control.Bearing({closeOnZeroBearing: true}));
 
 		function logEvent(e) { console.log(e.type); }
 

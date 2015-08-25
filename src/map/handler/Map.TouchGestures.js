@@ -99,7 +99,7 @@ L.Map.TouchGestures = L.Handler.extend({
 				delta = p1._add(p2)._divideBy(2)._subtract(this._centerPoint);
 				if (scale === 1 && delta.x === 0 && delta.y === 0) { return; }
 
-				var alpha = this.rotate ? - map.getBearing() * L.DomUtil.DEG_TO_RAD || 0;
+				var alpha = -map.getBearing() * L.DomUtil.DEG_TO_RAD;
 
 				this._center = map.unproject(map.project(this._pinchStartLatLng).subtract(delta.rotate(alpha)));
 			}

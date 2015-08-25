@@ -20,10 +20,10 @@ L.Map.CompassBearing = L.Handler.extend({
 
 	addHooks: function () {
 		if (this._capable) {
-			alert('Tracking compass');
+// 			alert('Tracking compass');
 			L.DomEvent.on(window, 'deviceorientation', this._throttled, this);
 		} else if (!this._probing) {
-			alert('Not tracking compass');
+// 			alert('Not tracking compass');
 			this._enabled = false;
 		} else {
 // 			console.log('Waiting for feature probing');
@@ -37,9 +37,8 @@ L.Map.CompassBearing = L.Handler.extend({
 	},
 
 	_onDeviceOrientation: function(ev) {
-		if (ev.absolute) {
+		if (ev.absolute && this._enabled) {
 			this._map.setBearing(ev.alpha);
-			return;
 		}
 	},
 
