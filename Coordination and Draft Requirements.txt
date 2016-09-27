@@ -1,0 +1,27 @@
+User Stories
+
+1: As a classics scholar
+I would like to overlay an ancient map over a present day map,
+so that I can experience walking the old city.
+
+2: As a classics scholar
+ I would like to keep using google earth plug-ins on my website
+ so that I can enjoy the functunalilty that I'm used to.
+ 
+ 3: As a classics scholar
+ I want to implement Fusion read ins
+ so that I can make my fusion data into markers
+ 
+ 4: As a classics scholar
+ I want to switch between Leaflet and Earth
+ so that I can pick which overlayed map looks better for display purposes.
+ 
+ 5: As a classics scholar
+ I want to add a new city
+ so that I can explore it like the existing map overlayed cities
+ 
+ Coordination:
+ 1. Track progress on Jira
+ 2. Communication through slack
+ 3. Git is set up here
+ 4. We want to be open source software
