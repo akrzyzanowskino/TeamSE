@@ -42,7 +42,8 @@ var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.
     accessToken: 'your.mapbox.public.access.token'
 }).addTo(map);
 map.addLayer(testing1);
-map.panTo(new L.LatLng(41.9028, 12.4964));
+map.setView([41.9028, 12.4964], 12);
+
 
 function drawTestLine() {
     var lat = 51;
