@@ -42,7 +42,7 @@ var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.
     accessToken: 'your.mapbox.public.access.token'
 }).addTo(map);
 map.addLayer(testing1);
-map.setView([41.9028, 12.4964], 12);
+map.setView([41.9028, 12.4964], 14);
 
 
 function drawTestLine() {
@@ -79,12 +79,21 @@ L.DomEvent.on(L.DomUtil.get('b2'), 'click', function () {
   map.removeLayer(myLayerGroup);
 });
 
+function othername() {
+    var input = document.getElementById("userInput").value;
+    if(input==="Rome"){
+        map.setView([41.9028, 12.4964], 13, {animation: true});
+    }
+    if(input==="London"){
+        map.setView([51.5074, -0.1278], 13, {animation: true});
+    }
+}
+
 </script>
 
-<form action="demo_form.asp">
- Change City: <input type="text" name="fname"><input type="submit" value="Submit"><br>
- Add New City: <input type="text" name="lname"><input type="submit" value="Submit"><br>
- Add New Point: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+<form id="form" onsubmit="return false;">
+     Test: <input type="text" id="userInput" />
+     Submit: <input type="submit" onclick="othername();" />
 </form>
 <div align="right">
 <form action="demo_form.asp">
