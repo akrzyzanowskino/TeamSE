@@ -42,14 +42,13 @@ var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.
     accessToken: 'your.mapbox.public.access.token'
 }).addTo(map);
 map.addLayer(testing1);
-<<<<<<< HEAD
+
 map.panTo(new L.LatLng(41.9028, 12.4964));
 var marker = L.marker([41.9028, 12.4964]).addTo(map);
 marker.bindPopup("<b>ROME</b>").openPopup();
-=======
+
 map.setView([41.9028, 12.4964], 12);
 
->>>>>>> branch 'master' of https://github.com/akrzyzanowskino/TeamSE.git
 
 function drawTestLine() {
     var lat = 51;
