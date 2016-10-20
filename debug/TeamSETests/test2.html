@@ -29,19 +29,24 @@ map.addLayer(osm);
 map.fitBounds(new L.LatLngBounds([51,7],[51,7]));
 drawTestLine();
 var testing = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery ï¿½ <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'your.mapbox.project.id',
     accessToken: 'your.mapbox.public.access.token'
 }).addTo(map);
 map.addLayer(testing);
 var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery ï¿½ <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'your.mapbox.project.id',
     accessToken: 'your.mapbox.public.access.token'
 }).addTo(map);
 map.addLayer(testing1);
+
+map.panTo(new L.LatLng(41.9028, 12.4964));
+var marker = L.marker([41.9028, 12.4964]).addTo(map);
+marker.bindPopup("<b>ROME</b>").openPopup();
+
 map.setView([41.9028, 12.4964], 12);
 
 
