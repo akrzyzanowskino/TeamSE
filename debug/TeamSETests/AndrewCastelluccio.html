@@ -87,14 +87,36 @@ function othername() {
     if(input==="London"){
         map.setView([51.5074, -0.1278], 13, {animation: true});
     }
-}
+};
+function updateOpacity(value) {
+    testing.opacity(value);
+};
+
 
 </script>
 
 <form id="form" onsubmit="return false;">
-     Test: <input type="text" id="userInput" />
+     Enter City Name: <input type="text" id="userInput" />
      Submit: <input type="submit" onclick="othername();" />
-</form>
+	 </form>
+Rome Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValue(this.value)" />
+<span id="range">0</span>
+<script type="text/javascript">
+function showValue(newValue)
+{
+	document.getElementById("range").innerHTML=1-newValue/100;
+	testing1.setOpacity(1-newValue/100);
+}
+</script>
+London Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueL(this.value)" />
+<span id="rangeL">0</span>
+<script type="text/javascript">
+function showValueL(newValue)
+{
+	document.getElementById("rangeL").innerHTML=1-newValue/100;
+	testing.setOpacity(1-newValue/100);
+}
+</script>
 <div align="right">
 <form action="demo_form.asp">
  Filter Option: <input type="text" name="fname"><input type="submit" value="Submit"><br>
