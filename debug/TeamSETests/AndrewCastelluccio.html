@@ -33,15 +33,16 @@ var testing = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.
     maxZoom: 18,
     id: 'your.mapbox.project.id',
     accessToken: 'your.mapbox.public.access.token'
-}).addTo(map);
-map.addLayer(testing);
+})
+
 var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
     maxZoom: 18,
     id: 'your.mapbox.project.id',
     accessToken: 'your.mapbox.public.access.token'
-}).addTo(map);
-map.addLayer(testing1);
+});
+var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
+		marker.bindPopup("<b>ROME</b>").openPopup();
 map.setView([41.9028, 12.4964], 14);
 
 
@@ -117,6 +118,35 @@ function showValueL(newValue)
 	testing.setOpacity(1-newValue/100);
 }
 </script>
+<input type="checkbox" id="cbox1" value="first_checkbox" onclick="handleClick(this)"> Show ancient Rome map</label>
+
+<script type="text/javascript">
+function handleClick(cb) {  
+     if(document.getElementById('cbox1').checked) {
+          map.addLayer(testing1);
+     }
+     else{
+          map.removeLayer(testing1);
+     }
+     
+
+};
+</script>
+
+<input type="checkbox" id="cbox2" value="second_checkbox" onclick="handleClickL(this)"> Show ancient London map</label>
+
+<script type="text/javascript">
+function handleClickL(cb) {  
+     if(document.getElementById('cbox2').checked) {
+          map.addLayer(testing);
+     }
+     else{
+          map.removeLayer(testing);
+     }
+};
+</script>
+
+
 <div align="right">
 <form action="demo_form.asp">
  Filter Option: <input type="text" name="fname"><input type="submit" value="Submit"><br>
