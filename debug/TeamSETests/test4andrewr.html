@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test Page</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../../dist/leaflet.css" />
+
+    <link rel="stylesheet" href="../css/screen.css" />
+	<script type="text/javascript" src="../../build/deps.js"></script>
+    <script src="../leaflet-include.js"></script>
+</head>
+<body>
+ <div id="map"></div>
+
+<script>
+var map;
+var myLayerGroup = new L.LayerGroup();
+
+// set up the map
+map = new L.Map('map', {preferCanvas: true});
+
+// create the tile layer with correct attribution
+var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmAttrib = 'Map data Â© OpenStreetMap contributors';
+var osm = new L.TileLayer(osmUrl, { minZoom: 1, maxZoom: 17, attribution: osmAttrib, detectRetina: true });
+map.addLayer(osm);
+map.fitBounds(new L.LatLngBounds([51,7],[51,7]));
+drawTestLine();
+var testing = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'your.mapbox.project.id',
+    accessToken: 'your.mapbox.public.access.token'
+})
+
+var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'your.mapbox.project.id',
+    accessToken: 'your.mapbox.public.access.token'
+});
+ var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
+		marker.bindPopup("<b>ROME</b>").openPopup();
+map.setView([41.9028, 12.4964], 14);
+
+
+// Your Client ID can be retrieved from your project in the Google
+// Developer Console, https://console.developers.google.com
+var CLIENT_ID = '<YOUR_CLIENT_ID>';
+
+var SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"];
+
+/**
+ * Check if current user has authorized this application.
+ */
+function checkAuth() {
+  gapi.auth.authorize(
+    {
+      'client_id': CLIENT_ID,
+      'scope': SCOPES.join(' '),
+      'immediate': true
+    }, handleAuthResult);
+}
+
+/**
+ * Handle response from authorization server.
+ *
+ * @param {Object} authResult Authorization result.
+ */
+function handleAuthResult(authResult) {
+  var authorizeDiv = document.getElementById('authorize-div');
+  if (authResult && !authResult.error) {
+    // Hide auth UI, then load client library.
+    authorizeDiv.style.display = 'none';
+    loadSheetsApi();
+  } else {
+    // Show auth UI, allowing the user to initiate authorization by
+    // clicking authorize button.
+    authorizeDiv.style.display = 'inline';
+  }
+}
+
+/**
+ * Initiate auth flow in response to user clicking authorize button.
+ *
+ * @param {Event} event Button click event.
+ */
+function handleAuthClick(event) {
+  gapi.auth.authorize(
+    {client_id: CLIENT_ID, scope: SCOPES, immediate: false},
+    handleAuthResult);
+  return false;
+}
+ 
+function loadSheetsApi(){
+	var discoveryUrl = 'https://sheets.googleapis.com/$discovery/rest?version=v4';
+	gapi.client.load(discoveryUrl.then(getMarkers);		
+}
+
+function getMarkers(){
+	gapi.client.sheets.spreadsheets.values.get({
+		 spreadsheetId: '1qZEyrYaMHL3lh8VYty51vNZXipZYQ8EMIDDnp-OHlX0',
+         range: 'Lattitude!A2:A5','Longitude!B2:B5',
+       }).then(function(response) {
+         var range = response.result;
+         if (range.values.length > 0) {
+           ('Lattitude, Longitude:');
+           for (i = 0; i < range.values.length; i++) {
+             var marker=L.marker(['Lattitude','Longitude']).addTo(map) = range.values[i];
+             // Print columns A and E, which correspond to indices 0 and 4.
+             //appendPre(row[0] + ', ' + row[4]);
+           }
+         } else {
+           appendPre('No data found.');
+         }
+       }, function(response) {
+         appendPre('Error: ' + response.result.error.message);
+       });
+     }
+
+     /**
+      * Append a pre element to the body containing the given message
+      * as its text node.
+      *
+      * @param {string} message Text to be placed in pre element.
+      */
+     function appendPre(message) {
+       var pre = document.getElementById('output');
+       var textContent = document.createTextNode(message + '\n');
+       pre.appendChild(textContent);
+     }
+      </script>
+      <script src="https://apis.google.com/js/client.js?onload=checkAuth">
+      </script>
+      <script>
+
+
+
+function drawTestLine() {
+    var lat = 51;
+    var long = 7;
+    for (var i = 0; i < 50; i++) {
+
+        var myCircle = new L.Circle(new L.LatLng(lat, long),3);
+        myCircle.on('click',
+            function (e) {
+                popup = new L.Popup();
+                popup.setLatLng(this.getLatLng());
+
+                var popuptxt = "Hello!";
+                alert("I am the click function");
+                        popup.setContent(popuptxt);
+
+                        map.openPopup(popup);
+
+
+            });
+        myLayerGroup.addLayer(myCircle);
+            lat = lat + 0.0001;
+            long = long + 0.0001;
+
+    }
+    map.addLayer(myLayerGroup);
+};
+
+L.DomEvent.on(L.DomUtil.get('b1'), 'click', function () {
+  map.addLayer(myLayerGroup);
+});
+L.DomEvent.on(L.DomUtil.get('b2'), 'click', function () {
+  map.removeLayer(myLayerGroup);
+});
+
+function othername() {
+    var input = document.getElementById("userInput").value;
+    if(input==="Rome"){
+        map.setView([41.9028, 12.4964], 13, {animation: true});
+    }
+    if(input==="London"){
+        map.setView([51.5074, -0.1278], 13, {animation: true});
+    }
+};
+function updateOpacity(value) {
+    testing.opacity(value);
+};
+
+
+</script>
+
+<form id="form" onsubmit="return false;">
+     Enter City Name: <input type="text" id="userInput" />
+     Submit: <input type="submit" onclick="othername();" />
+	 </form>
+Rome Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValue(this.value)" />
+<span id="range">0</span>
+<script type="text/javascript">
+function showValue(newValue)
+{
+	document.getElementById("range").innerHTML=1-newValue/100;
+	testing1.setOpacity(1-newValue/100);
+}
+</script>
+London Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueL(this.value)" />
+<span id="rangeL">0</span>
+<script type="text/javascript">
+function showValueL(newValue)
+{
+	document.getElementById("rangeL").innerHTML=1-newValue/100;
+	testing.setOpacity(1-newValue/100);
+}
+</script>
+<input type="checkbox" id="cbox1" value="first_checkbox" onclick="handleClick(this)"> Show ancient Rome map</label>
+
+<script type="text/javascript">
+function handleClick(cb) {  
+     if(document.getElementById('cbox1').checked) {
+          map.addLayer(testing1);
+     }
+     else{
+          map.removeLayer(testing1);
+     }
+     
+
+};
+</script>
+
+<input type="checkbox" id="cbox2" value="second_checkbox" onclick="handleClickL(this)"> Show ancient London map</label>
+
+<script type="text/javascript">
+function handleClickL(cb) {  
+     if(document.getElementById('cbox2').checked) {
+          map.addLayer(testing);
+     }
+     else{
+          map.removeLayer(testing);
+     }
+};
+</script>
+
+<div id="authorize-div" style="display: none">
+      <span>Authorize access to Google Sheets API</span>
+      <!--Button for the user to click to initiate auth sequence -->
+      <button id="authorize-button" onclick="handleAuthClick(event)">
+        Authorize
+      </button>
+<div align="right">
+<form action="demo_form.asp">
+ Filter Option: <input type="text" name="fname"><input type="submit" value="Submit"><br>
+ Filter Option: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+ Filter Option: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+</form>
+</div>
+<pre id="output"></pre>
+</body>
+
+</html>
