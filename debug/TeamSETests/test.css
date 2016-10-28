@@ -1,0 +1,34 @@
+/* The side navigation menu */
+.sidenav {
+    height: 100%; 
+    width: 0; 
+    position: absolute; 
+    z-index: 10; 
+    top: 0;
+    right: 0;
+    background-color: #111; 
+    overflow-x: hidden; 
+    padding-top: 60px;
+    transition: 0.5s; 
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+    transition: 0.3s
+}
+
+#main {
+	position: absolute;
+	top: 0;
+	right: 0;
+    transition: margin-right .5s;
+    padding-top: 10px;
+    padding-right: 300px;
+}
+
+
+}
