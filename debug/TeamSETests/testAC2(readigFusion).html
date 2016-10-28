@@ -37,14 +37,10 @@ var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SEL
 var t = JSON.parse(testvar2);
 var rowData = t["rows"];
 var arrayLength = 5;
-alert("test");
-var information = rowData[1];
-alert("test");
 for (var i = 0; i < arrayLength; i++) {
-    information = rowData[i].split(",");
-    alert(information[0]);
-    alert(information[1]);
-    alert(information[2]);
+    alert(rowData[i][0]);
+    alert(rowData[i][1]);
+    alert(rowData[i][2]);
     
 }
 
