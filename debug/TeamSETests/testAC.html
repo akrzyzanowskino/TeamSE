@@ -43,6 +43,8 @@ var testing1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.
 });
 var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
 		marker.bindPopup("<b>ROME</b>").openPopup();
+var marker = L.marker([ 51.5074, -0.1278 ]).addTo(map);
+		marker.bindPopup("<b>LONDON</b>").openPopup();
 map.setView([41.9028, 12.4964], 14);
 
 
@@ -85,20 +87,25 @@ function othername() {
     if(input==="Rome"){
         map.setView([41.9028, 12.4964], 13, {animation: true});
     }
-    if(input==="London"){
+    if(input==="Loondon"){
         map.setView([51.5074, -0.1278], 13, {animation: true});
     }
 };
-function updateOpacity(value) {
-    testing.opacity(value);
+function othername() {
+  var fso = new ActiveXObject("Scripting.FileSystemObject");
+    var fh = fso.OpenTextFile("ineedtofindthis.txt", 8, false, 0);
+    fh.WriteLine("testaaa");
+    fh.Close();
+    alert("done");
 };
-
-
+function updateOpacity(value) {
+      testing.opacity(value);
+};
 </script>
-
 <form id="form" onsubmit="return false;">
      Enter City Name: <input type="text" id="userInput" />
      Submit: <input type="submit" onclick="othername();" />
+     Submit: <input type="submit" onclick="othername2();" />
 	 </form>
 Rome Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValue(this.value)" />
 <span id="range">0</span>
