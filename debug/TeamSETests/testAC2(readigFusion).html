@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test Page</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../../dist/leaflet.css" />
+
+    <link rel="stylesheet" href="../css/screen.css" />
+	<script type="text/javascript" src="../../build/deps.js"></script>
+    <script src="../leaflet-include.js"></script>
+</head>
+<body>
+ <div id="map"></div>
+<form action="demo_form.asp">
+ Change City: <input type="text" name="fname" id="A"><input type="submit" value="Submit"><br>
+ Add New City: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+ Add New Point: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+</form>
+<script>
+var map;
+var myLayerGroup = new L.LayerGroup();
+
+// set up the map
+map = new L.Map('map', {preferCanvas: true});
+
+// create the tile layer with correct attribution
+var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmAttrib = 'Map data © OpenStreetMap contributors';
+var osm = new L.TileLayer(osmUrl, { minZoom: 1, maxZoom: 17, attribution: osmAttrib, detectRetina: true });
+map.addLayer(osm);
+map.fitBounds(new L.LatLngBounds([51,7],[51,7]));
+//var testvar = httpGet("https://www.googleapis.com/fusiontables/v2/tables/1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT/columns?key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+//document.getElementById('A').value = testvar;
+var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, CenturyofOrigin FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+var t = JSON.parse(testvar2);
+var rowData = t["rows"];
+var arrayLength = rowData.length;
+for (var i = 0; i < arrayLength; i++) {
+    var marker = L.marker([ rowData[i][0], rowData[i][1] ]).addTo(map);
+		marker.bindPopup("<b>" + rowData[i][2] + "</b>" ).openPopup();
+		if(rowData[i][2]==17){
+		     marker.valueOf()._icon.style.backgroundColor = 'green'; 
+		}
+}
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+
+
+</script>
+<div align="right">
+<form action="demo_form.asp">
+ Filter Option: <input type="text" name="fname"><input type="submit" value="Submit"><br>
+ Filter Option: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+ Filter Option: <input type="text" name="lname"><input type="submit" value="Submit"><br>
+</form>
+</div>
+</body>
+
+</html>
