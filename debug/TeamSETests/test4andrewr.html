@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
 	<title>Test Page</title>
@@ -27,27 +26,26 @@ map = new L.Map('map', {preferCanvas: true});
 
 // create the tile layer with correct attribution
 var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
-var osmAttrib = 'Map data Â© OpenStreetMap contributors';
+var osmAttrib = 'Map data © OpenStreetMap contributors';
 var osm = new L.TileLayer(osmUrl, { minZoom: 1, maxZoom: 17, attribution: osmAttrib, detectRetina: true });
 map.addLayer(osm);
 map.fitBounds(new L.LatLngBounds([51,7],[51,7]));
 //var testvar = httpGet("https://www.googleapis.com/fusiontables/v2/tables/1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT/columns?key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 //document.getElementById('A').value = testvar;
-var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, CenturyofOrigin, Dedication, Rione, Roma.it link,  FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 var t = JSON.parse(testvar2);
 var rowData = t["rows"];
 var arrayLength = rowData.length;
 for (var i = 0; i < arrayLength; i++) {
-    addMarker(rowData[i][0],rowData[i][1],rowData[i][3], rowData[i][4],rowData[i][2],rowData[i][5]);
-    
+	   addMarker(rowData[i][0],rowData[i][1],rowData[i][2],rowData[i][3],rowData[i][4]);
+	    
 }
-function addMarker(Lat,Long,Name, Rione, Century, link){
+
+function addMarker(Lat,Long,Name,Century,Rione){
 	var marker = new L.marker([Lat,Long]).addTo(map);
-	marker.bindPopup("<b>"+[Name]+"</b>").openPopup();
-	var popuptxt="<b>"+[Rione, Century, link]+"</b>";
-		marker.setContent(popuptxt);
-		map.openPopup(marker);
+	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>").openPopup();
 }
+
 
 function httpGet(theUrl)
 {
