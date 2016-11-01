@@ -43,7 +43,7 @@ for (var i = 0; i < arrayLength; i++) {
 
 function addMarker(Lat,Long,Name,Century,Rione,Link){
 	var marker = new L.marker([Lat,Long]).addTo(map);
-	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione,Link]+"</b>").openPopup();
+	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>").openPopup();
 }
 
 
