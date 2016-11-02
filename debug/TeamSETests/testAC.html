@@ -46,6 +46,54 @@ var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
 var marker = L.marker([ 51.5074, -0.1278 ]).addTo(map);
 		marker.bindPopup("<b>LONDON</b>").openPopup();
 map.setView([41.9028, 12.4964], 14);
+getAndUseFusionData();
+function getAndUseFusionData(){
+var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, CenturyofOrigin, RomaItLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+var lat;
+var long;
+var CoO;
+var RiL;
+var t = JSON.parse(testvar2);
+var rowData = t["rows"];
+var arrayLength = rowData.length;
+var seven = [];
+var eight = [];
+var nine = [];
+var twent = [];
+
+	for (var i = 0; i < arrayLength; i++) {
+		lat = rowData[i][0];
+		long = rowData[i][1];
+		CoO = rowData[i][2];
+		RiL = rowData[i][3];
+	    var marker = L.marker([ lat, long ]).addTo(map);
+			marker.bindPopup("<b>" + RiL + "</b>" ).openPopup();
+			 var arr = {latitude:lat, longitude:long, Roma:RiL};
+			if(CoO==17){
+				seven.push(arr);
+			    marker.valueOf()._icon.style.backgroundColor = 'green'; 
+			}
+			if(CoO==18){
+				eight.push(arr);
+			     marker.valueOf()._icon.style.backgroundColor = 'blue'; 		
+			}
+			if(CoO==19){
+				nine.push(arr);
+			     marker.valueOf()._icon.style.backgroundColor = 'red'; 
+			}
+			if(CoO==20){
+				twent.push(arr);
+			     marker.valueOf()._icon.style.backgroundColor = 'yellow'; 
+			}
+	}
+}
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
 
 
 function drawTestLine() {
