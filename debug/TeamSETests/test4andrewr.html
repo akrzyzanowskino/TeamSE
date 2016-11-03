@@ -44,6 +44,12 @@ html, body, #map {
 				Enter City Name: <input type="text" id="userInput" /> Submit: <input
 					type="submit" onclick="othername();" />
 			</form>
+			<!-- Attempt at Rione button sort -->
+		</a> </a> <a>
+			<form id="form" onsubmit="return false;" action="">
+				Show Shrines by Rione: <input type="text" id="userInput2" /> Submit: <input
+					type="submit" onclick="rioneSort();" />
+			</form>
 		</a>
 <!-- demo dropdown menu -->
 <ul>
@@ -59,7 +65,7 @@ html, body, #map {
     </div>
   </li>
 </ul>
-		
+	
 	</div>
 	
 
@@ -154,6 +160,10 @@ html, body, #map {
 			testing.opacity(value);
 		};
 		
+		function rioneSort(){
+			var input2 = document.getElementById("userInput2").value;
+			showRiones(input2);
+		}
 		
  
  function show17() {
@@ -205,7 +215,17 @@ html, body, #map {
 			   map.addLayer(markersTest);
 			   
 		};							
-		
+		function showRiones(rio){
+			var arlen=reg.length;
+			map.removeLayer(markersTest);
+			markersTest = new L.FeatureGroup();
+			for (var i=0; i<arlen; i++){
+				if(reg[i].rione==rio){
+				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image);
+				   map.addLayer(markersTest);
+			}
+		}
+		}
 	
 function getAndUseFusionData(){
     var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
@@ -223,6 +243,7 @@ function getAndUseFusionData(){
     var eight = [];
     var nine = [];
     var twent = [];
+    var region = [];
 	for (var i = 0; i < arrayLength; i++) {
 		lat = rowData[i][0];
 		long = rowData[i][1];
@@ -234,18 +255,23 @@ function getAndUseFusionData(){
 		var arr = {latitude:lat, longitude:long,dedication:Ded,century:CoO,rione:Rio, roma:RiL, image:IDL};
 			if(CoO==17)
 				seven.push(arr);
+				region.push(arr);
 			if(CoO==18){
-				eight.push(arr);				
+				eight.push(arr);
+				region.push(arr);
 			}
 			if(CoO==19)
 				nine.push(arr);
+				region.push(arr);
 			if(CoO==20)
 				twent.push(arr);
+				region.push(arr);
 	}
 	svn = seven;
 	eig = eight;
 	nin = nine;
 	ten = twent;
+	reg = region;
 }
 function httpGet(theUrl)
 {
