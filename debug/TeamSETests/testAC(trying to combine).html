@@ -126,6 +126,10 @@ html, body, #map {
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
         getAndUseFusionData();
+        var thr;
+        var fr;
+        var fv;
+        var sx;
         var svn;
         var eig;
         var nin;
@@ -156,7 +160,7 @@ html, body, #map {
 		
 		
  
- function show17() {
+	 function show17() {
 			showMarkers(17);
 		};
 		function show18() {
@@ -210,7 +214,7 @@ html, body, #map {
 function getAndUseFusionData(){
     var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var lat;
-	var long;
+	var longi;
 	var CoO;
 	var RiL;
 	var Rio;
@@ -222,24 +226,29 @@ function getAndUseFusionData(){
     var eight = [];
     var nine = [];
     var twent = [];
+    var six = [];
+    var five = [];
+    var four = [];
+    var three = [];
 	for (var i = 0; i < arrayLength; i++) {
 		lat = rowData[i][0];
-		long = rowData[i][1];
+		longi = rowData[i][1];
 		Ded = rowData[i][2];
 		CoO = rowData[i][3];
 		Rio = rowData[i][4];
 		RiL = rowData[i][5];
-		var arr = {latitude:lat, longitude:long,dedication:Ded,century:CoO,rione:Rio, roma:RiL};
+		var arr = {latitude:lat, longitude:longi,dedication:Ded,century:CoO,rione:Rio, roma:RiL};
+			
 			if(CoO==17)
 				seven.push(arr);
-			if(CoO==18){
+			if(CoO==18)
 				eight.push(arr);				
-			}
 			if(CoO==19)
 				nine.push(arr);
 			if(CoO==20)
 				twent.push(arr);
 	}
+
 	svn = seven;
 	eig = eight;
 	nin = nine;
