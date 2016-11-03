@@ -60,8 +60,8 @@ li a, .dropbtn {
     text-decoration: none;
 }
 
-li a:hover, .dropdown:click .dropbtn {
-    background-color: red;
+li a:click, .dropdown:click .dropbtn {
+    background-color: white;
 }
 
 li.dropdown {
@@ -84,9 +84,9 @@ li.dropdown {
     text-align: left;
 }
 
-.dropdown-content a:clicks {background-color: #f1f1f1}
+.dropdown-content a:click {background-color: #f1f1f1}
 
-.dropdown:hover .dropdown-content {
+.dropdown:click .dropdown-content {
     display: block;
 }
 
