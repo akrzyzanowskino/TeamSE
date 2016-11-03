@@ -31,17 +31,23 @@ html, body, #map {
 	<!--Map Selection and Opacity Sliders -->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a><input type="checkbox" id="cbox1" value="first_checkbox"
-			onclick="handleClick(this)"> Show ancient Rome map <label></label>
-			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10"onchange="showValue(this.value)" />
-		</a> </a> <a><input type="checkbox" id="cbox2" value="second_checkbox"
-			onclick="handleClickL(this)"> Show ancient London map <label></label>
-			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10" onchange="showValue(this.value)"/>
-		</a> </a> <a>
+		
+		<a>
+			<input type="checkbox" id="cbox1" value="first_checkbox"
+			onclick="handleClick(this)"> Show ancient Rome map 
+			Opacity <input type="range" min="0" max="100" value="0" step="10"onchange="showValue(this.value)" />
+		</a> 
+		
+		<a>
+			<input type="checkbox" id="cbox2" value="second_checkbox"
+			onclick="handleClickL(this)"> Show ancient London map
+			Opacity <input type="range" min="0" max="100" value="0" step="10" onchange="showValue(this.value)"/>
+		</a>
+		
+		<a>
 			<form id="form" onsubmit="return false;" action="">
-				Enter City Name: <input type="text" id="userInput" /> Submit: <input
+			Enter City Name: <input type="text" id="userInput" /> Submit: 
+			<input
 					type="submit" onclick="othername();" />
 			</form>
 		</a>
