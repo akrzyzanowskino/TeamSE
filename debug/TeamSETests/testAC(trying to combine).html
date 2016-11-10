@@ -50,12 +50,15 @@ html, body, #map {
 
   <li class="dropdown">
     <a href="#" class="dropbtn">Dropdown</a>
-    <div class="dropdown-content">
-      <a onclick="show17()" href="#">17th Century</a>
-      <a onclick="show18()" href="#">18th Century</a>
-      <a onclick="show19()" href="#">19th Century</a>
-      <a onclick="show20()" href="#">20th Century</a>
-      <a onclick="showAll()" href="#">All of the Above</a>
+    <div class="dropdown-content" id = "ahh">
+      <a id ="fourteen" onclick="show14()" href="#">14th and Older</a>
+	  <a id ="fifteen" onclick="show15()" href="#">15th Century</a>
+      <a id ="sixteen" onclick="show16()" href="#">16th Century</a>
+      <a id ="seventeen" onclick="show17()" href="#">17th Century</a>
+      <a id ="eighteen" onclick="show18()" href="#">18th Century</a>
+      <a id ="nineteen" onclick="show19()" href="#">19th Century</a>
+      <a id ="twenty" onclick="show20()" href="#">20th Century</a>
+      
     </div>
   </li>
 </ul>
@@ -72,6 +75,7 @@ html, body, #map {
 	<script type="text/javascript">
 		/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 		function openNav() {
+		alert(document.getElementById("ahh").textContent);
 			document.getElementById("mySidenav").style.width = "250px";
 			document.getElementById("main").style.marginLeft = "250px";
 		}
@@ -158,48 +162,102 @@ html, body, #map {
 			testing.opacity(value);
 		};
 		
-		
- 
+	var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;	
+ 	function show14() {
+ 		f = !f;
+			showMarkers(14);
+		};
+	function show15() {
+		ff = !ff;	
+			showMarkers(15);
+		};
+	function show16() {
+		s = !s;
+			showMarkers(16);
+		}; 
 	 function show17() {
+			ss = !ss;
 			showMarkers(17);
 		};
 		function show18() {
+			e = !e;
 			showMarkers(18);
 		};		
 		function show19() {
+			n = !n;
 			showMarkers(19);
 		};
 		function show20() {
+			t = !t;
 			showMarkers(20);
 		};
-		function showAll() {
-			showMarkers(0);
-		};		
+		function setDefaultNames(){
+		 document.getElementById("fourteen").innerHTML="14th and Older";
+		 				document.getElementById("fifteen").innerHTML="15th Century";
+		 			    document.getElementById("seventeen").innerHTML="17th Century";
+		 			    document.getElementById("sixteen").innerHTML="16th Century";
+		 			    document.getElementById("eighteen").innerHTML="18th Century";
+		 			    document.getElementById("nineteen").innerHTML="19th Century";
+		 			    document.getElementById("twenty").innerHTML="20th Century";
+		 			    
+		 
+		
+		};
 		function showMarkers(num) {
 			var arlen;
 			map.removeLayer(markersTest);
 			markersTest = new L.FeatureGroup();
-			if(num==17 || num==0){
+			setDefaultNames();
+			if(num==0 || f){
+			    arlen = fr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma);
+			    }
+			     arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma);
+			    }
+			    document.getElementById("fourteen").innerHTML="&#9745;14th and Older";
+			   }
+			if(ff || num==0){
+			    arlen = fv.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fv[i].latitude,fv[i].longitude,fv[i].dedication,fv[i].century,fv[i].rione,fv[i].roma);
+			    }
+			    document.getElementById("fifteen").innerHTML="&#9745;15th Century";
+			   }
+			if(s || num==0){
+			    arlen = sx.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma);
+			    }
+			    document.getElementById("sixteen").innerHTML="&#9745;16th Century";
+			   }
+			if(ss || num==0){
 			    arlen = svn.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(svn[i].latitude,svn[i].longitude,svn[i].dedication,svn[i].century,svn[i].rione,svn[i].roma);
 			    }
+			    document.getElementById("seventeen").innerHTML="&#9745;17th Century";
 			   }
 			   
-			   if(num==19 || num==0){
+			   if(n || num==0){
 			    arlen = nin.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(nin[i].latitude,nin[i].longitude,nin[i].dedication,nin[i].century,nin[i].rione,nin[i].roma);
 			    }
+			    document.getElementById("nineteen").innerHTML="&#9745;19th Century";
 			   }
-			   if(num==20 || num==0){
+			   if(t || num==0){
 			    arlen = ten.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(ten[i].latitude,ten[i].longitude,ten[i].dedication,ten[i].century,ten[i].rione,ten[i].roma);
 			    }
+			    document.getElementById("twenty").innerHTML="&#9745;20th Century";
 			   }
-			   if(num==18 || num==0){
+			   if(e || num==0){
 			    arlen = eig.length;
+			     document.getElementById("eighteen").innerHTML="&#9745;18th Century";			    
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(eig[i].latitude,eig[i].longitude,eig[i].dedication,eig[i].century,eig[i].rione,eig[i].roma);
 			   				   map.addLayer(markersTest);	
@@ -238,7 +296,14 @@ function getAndUseFusionData(){
 		Rio = rowData[i][4];
 		RiL = rowData[i][5];
 		var arr = {latitude:lat, longitude:longi,dedication:Ded,century:CoO,rione:Rio, roma:RiL};
-			
+			if(CoO==13)
+				three.push(arr);
+			if(CoO==14)
+				four.push(arr);
+			if(CoO==15)
+				five.push(arr);
+			if(CoO==16)
+				six.push(arr);
 			if(CoO==17)
 				seven.push(arr);
 			if(CoO==18)
@@ -248,7 +313,10 @@ function getAndUseFusionData(){
 			if(CoO==20)
 				twent.push(arr);
 	}
-
+	thr = three;
+	fr = four;
+	fv = five
+	sx = six;
 	svn = seven;
 	eig = eight;
 	nin = nine;
@@ -265,9 +333,23 @@ var markers = L.markerClusterGroup();
 function addMarker(Lat,Long,Name,Century,Rione,Link){
 	var marker = new L.marker([Lat,Long]);
 	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>").openPopup();	
+   
+   var greenIcon = L.icon({
+    iconUrl: 'http://ddc-lovotecs.sr.unh.edu/assets/img/leaflet/marker-icon-red.png',
+    shadowUrl: 'https://s3.amazonaws.com/bos-creates/css/images/marker-shadow.png',
+
+    iconSize:     [25, 41], // size of the icon
+    shadowSize:   [41, 41], // size of the shadow
+    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+    shadowAnchor: [4, 62],  // the same for the shadow
+    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+});
+   L.marker([41.5, 12.0], {icon: greenIcon}).addTo(map);
+  
     markersTest.addLayer(marker);
     
 }
+
 	</script>
 
 
