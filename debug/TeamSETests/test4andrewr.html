@@ -130,21 +130,21 @@ html, body, #map {
 				});
 		
 		var redMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_red.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_red.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var orangeMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_orange.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_orange.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var yellowMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_yellow.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_yellow.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
@@ -158,28 +158,28 @@ html, body, #map {
 		});
 
 		var blueMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_blue.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var purpleMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_purple.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 
 		var pinkMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_pink.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var whiteMarker = L.icon({
-		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_white.png',
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_white.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
@@ -280,8 +280,22 @@ html, body, #map {
 			markersTest = new L.FeatureGroup();
 			for (var i=0; i<arlen; i++){
 				if(reg[i].rione==rio){
-				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image);
+					if(reg[i].century==17){
+				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
 				   map.addLayer(markersTest);
+					}
+					if(reg[i].century==18){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,yellowMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==19){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==20){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,purpleMarker);
+						   map.addLayer(markersTest);
+							}
 			}
 		}
 		}
