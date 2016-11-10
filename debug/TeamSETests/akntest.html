@@ -31,18 +31,21 @@ html, body, #map {
 	<!--Map Selection and Opacity Sliders -->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a><input type="checkbox" id="cbox1" value="first_checkbox"
-			onclick="handleClick(this)"> Show ancient Rome map <label></label>
-			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10"onchange="showValue(this.value)" />
-		</a> </a> <a><input type="checkbox" id="cbox2" value="second_checkbox"
-			onclick="handleClickL(this)"> Show ancient London map <label></label>
-			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10" onchange="showValue(this.value)"/>
-		</a> </a> <a>
+		
+		<a>
+		<input type="checkbox" id="cbox1" value="first_checkbox" onclick="handleClick(this)"> Show ancient Rome map
+		 Opacity <input type="range" min="0" max="100" value="0" step="10"onchange="showValue(this.value)" />
+		</a> 
+		
+		<a>
+		<input type="checkbox" id="cbox2" value="second_checkbox" onclick="handleClickL(this)"> Show ancient London map 
+		Opacity <input type="range" min="0" max="100" value="0" step="10" onchange="showValue(this.value)"/>
+		</a> 
+		
+		<a>
 			<form id="form" onsubmit="return false;" action="">
-				Enter City Name: <input type="text" id="userInput" /> Submit: <input
-					type="submit" onclick="othername();" />
+				Enter City Name: <input type="text" id="userInput" />
+				Submit: <input type="submit" onclick="othername();" />
 			</form>
 		</a>
 <!-- demo dropdown menu -->
@@ -51,7 +54,7 @@ html, body, #map {
   <li class="dropdown">
     <a href="#" class="dropbtn">Dropdown</a>
     <div class="dropdown-content">
-      <a onclick="show17()" href="#">17th Century</a>
+      <a onclick="show17()" href="#">17th Century</a> 
       <a onclick="show18()" href="#">18th Century</a>
       <a onclick="show19()" href="#">19th Century</a>
       <a onclick="show20()" href="#">20th Century</a>
@@ -62,7 +65,11 @@ html, body, #map {
 		
 	</div>
 	
-
+<script type="text/javascript">
+function checkMark(){
+document.getElementById("dropdown-content").style.visiblility= true;
+}
+</script>
 	<div id="main">
 	<span style="font-size:30px;cursor:pointer" onclick="openNav()" onclick="closeNav()">&#9776; Menu</span>	</div>
  
@@ -123,25 +130,64 @@ html, body, #map {
 					accessToken : 'your.mapbox.public.access.token'
 				});
 
-		var colorMarkers = L.Icon.extend({
-			options: {
-				iconSize:     [38, 95],
-				iconAnchor:   [22, 94],
-				popupAnchor:  [-3, -76]
-			}
+		var redMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_red.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var orangeMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_orange.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var yellowMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_yellow.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
 
-		var redMarker = new colorMarkers({iconUrl: 'marker_red.png'}),
-		orangeMarker = new colorMarkers({iconUrl:'marker_orange.png'}),
-		yellowMarker = new colorMarkers({iconUrl:'marker_yellow.png'});
-		greenMarker = new colorMarkers({iconUrl: 'marker_green.png'});
-		blueMarker = new colorMarkers({iconUrl: 'marker_blue.png'});
-		purpleMarker = new colorMarkers({iconUrl: 'marker_purple.png'});
-		pinkMarker = new colorMarkers({iconUrl: 'marker_pink.png'});
-		whiteMarker = new colorMarkers({iconUrl: 'marker_white.png'});
+		var greenMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		var blueMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_blue.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
 		
-		var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
-		marker.bindPopup("<b>ROME</b>").openPopup();
+		var purpleMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/purple_green.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		var pinkMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_pink.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var whiteMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/alexandranovitz/git/TeamSE/debug/TeamSETests/markers/marker_white.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+
+		L.marker([ 41.9028, 12.4964], {icon: greenMarker}).bindPopup("I am a green.").addTo(map);
+
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
         getAndUseFusionData();

@@ -1,6 +1,7 @@
 /* The side navigation menu */
 .sidenav {
-    height: 100%; 
+	/* fixed so the menu doesn't extend below the map*/
+    height: 91.5%; 
     width: 0; 
     position: absolute; 
     z-index: 314159; 
@@ -79,7 +80,7 @@ li.dropdown {
 .dropdown-content a {
     color: black;
     padding: 12px 76px;
-    text-decoration: none;
+    text-decoration:none;
     display: inline-block;
     text-align: left;
 }
