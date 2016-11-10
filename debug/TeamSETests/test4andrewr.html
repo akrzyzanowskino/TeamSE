@@ -22,7 +22,6 @@ body {
 	padding: 0;
 	margin: 0;
 }
-
 html, body, #map {
 	height: 100%;
 	width: 100%;
@@ -58,6 +57,10 @@ html, body, #map {
   <li class="dropdown">
     <a href="#" class="dropbtn">Dropdown</a>
     <div class="dropdown-content">
+    <a onclick="show13()" href="#">13th Century</a>
+    <a onclick="show14()" href="#">14th Century</a>
+    <a onclick="show15()" href="#">15th Century</a>
+    <a onclick="show16()" href="#">16th Century</a>
       <a onclick="show17()" href="#">17th Century</a>
       <a onclick="show18()" href="#">18th Century</a>
       <a onclick="show19()" href="#">19th Century</a>
@@ -82,7 +85,6 @@ html, body, #map {
 			document.getElementById("mySidenav").style.width = "250px";
 			document.getElementById("main").style.marginLeft = "250px";
 		}
-
 		/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
@@ -94,12 +96,10 @@ html, body, #map {
 	<script type="text/javascript">
 		var map;
 		var myLayerGroup = new L.LayerGroup();
-
 		// set up the map
 		map = new L.Map('map', {
 			preferCanvas : true
 		});
-
 		// create the tile layer with correct attribution
 		var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		var osmAttrib = 'Map data © OpenStreetMap contributors';
@@ -119,7 +119,6 @@ html, body, #map {
 					id : 'your.mapbox.project.id',
 					accessToken : 'your.mapbox.public.access.token'
 				})
-
 		var testing1 = new L.tileLayer(
 				'http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}',
 				{
@@ -149,14 +148,12 @@ html, body, #map {
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-
 		var greenMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
 		    iconSize:     [30, 41], // size of the icon
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-
 		var blueMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
 		    iconSize:     [30, 41], // size of the icon
@@ -170,7 +167,6 @@ html, body, #map {
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-
 		var pinkMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
 		    iconSize:     [30, 41], // size of the icon
@@ -184,13 +180,16 @@ html, body, #map {
 		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
 		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
 		});
-
 		
 		var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
 		marker.bindPopup("<b>ROME</b>").openPopup();
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
         getAndUseFusionData();
+        var thr;
+        var fr;
+        var fv;
+        var sx;
         var svn;
         var eig;
         var nin;
@@ -201,7 +200,6 @@ html, body, #map {
 		L.DomEvent.on(L.DomUtil.get('b2'), 'click', function() {
 			map.removeLayer(myLayerGroup);
 		});
-
 		function othername() {
 			var input = document.getElementById("userInput").value;
 			if (input === "Rome") {
@@ -223,8 +221,18 @@ html, body, #map {
 			var input2 = document.getElementById("userInput2").value;
 			showRiones(input2);
 		}
-		
- 
+		function show13(){
+			showMarkers(13);
+		}
+		function show14(){
+			showMarkers(14);
+		}
+		function show15(){
+			showMarkers(15);
+		}
+		function show16(){
+			showMarkers(16);
+		}
  function show17() {
 			showMarkers(17);
 		};
@@ -244,6 +252,30 @@ html, body, #map {
 			var arlen;
 			map.removeLayer(markersTest);
 			markersTest = new L.FeatureGroup();
+			if(num==13 || num==0){
+			    arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			    }
+			   }
+			if(num==14 || num==0){
+			    arlen = fr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
+			    }
+			   }
+			if(num==15 || num==0){
+			    arlen = fv.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fv[i].latitude,fv[i].longitude,fv[i].dedication,fv[i].century,fv[i].rione,fv[i].roma,fv[i].image,blueMarker);
+			    }
+			   }
+			if(num==16 || num==0){
+			    arlen = sx.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,whiteMarker);
+			    }
+			   }
 			if(num==17 || num==0){
 			    arlen = svn.length;
 			    for (var i = 0; i < arlen; i++) {
@@ -280,6 +312,22 @@ html, body, #map {
 			markersTest = new L.FeatureGroup();
 			for (var i=0; i<arlen; i++){
 				if(reg[i].rione==rio){
+					if(reg[i].century==13){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==14){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==15){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,blueMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==16){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,whiteMarker);
+						   map.addLayer(markersTest);
+									}
 					if(reg[i].century==17){
 				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
 				   map.addLayer(markersTest);
@@ -312,6 +360,10 @@ function getAndUseFusionData(){
 	var t = JSON.parse(testvar2);
 	var rowData = t["rows"];
 	var arrayLength = rowData.length;
+    var three=[];
+	var four=[];
+	var five= [];
+	var six = [];
 	var seven = [];
     var eight = [];
     var nine = [];
@@ -326,6 +378,18 @@ function getAndUseFusionData(){
 		RiL = rowData[i][5];
 		IDL = rowData[i][6];
 		var arr = {latitude:lat, longitude:long,dedication:Ded,century:CoO,rione:Rio, roma:RiL, image:IDL};
+		if(CoO==13)
+			three.push(arr);
+			region.push(arr);
+		if(CoO==14)
+			four.push(arr);
+			region.push(arr);
+		if(CoO==15)
+			five.push(arr);
+			region.push(arr);
+		if(CoO==16)
+			six.push(arr);
+			region.push(arr);
 			if(CoO==17)
 				seven.push(arr);
 				region.push(arr);
@@ -340,6 +404,10 @@ function getAndUseFusionData(){
 				twent.push(arr);
 				region.push(arr);
 	}
+	thr=three;
+	fr=four;
+	fv=five;
+	sx=six;
 	svn = seven;
 	eig = eight;
 	nin = nine;
@@ -354,7 +422,6 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 var markers = L.markerClusterGroup();
-
 function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
 	var marker = new L.marker([Lat,Long],{icon: Color});
 	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
@@ -385,7 +452,6 @@ function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
 			} else {
 				map.removeLayer(testing1);
 			}
-
 		};
 	</script>
 
