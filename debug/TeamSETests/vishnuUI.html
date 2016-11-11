@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Test Page</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="../../dist/leaflet.css" />
+
+    <link rel="stylesheet" href="../css/screen.css" />
+    <link rel="stylesheet" href="../css/dropdown.css" />
+	<script type="text/javascript" src="../../build/deps.js"></script>
+    <script src="../leaflet-include.js"></script>
+</head>
+<body>
+ <div id="map"></div>
+ <body style="background-color:#FF5733;">
+</body>
+<script>
+var map;
+var myLayerGroup = new L.LayerGroup();
+
+// set up the map
+map = new L.Map('map', {preferCanvas: true});
+
+// create the tile layer with correct attribution
+var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
+var osmAttrib = 'Map data Â© OpenStreetMap contributors';
+var osm = new L.TileLayer(osmUrl, { minZoom: 1, maxZoom: 17, attribution: osmAttrib, detectRetina: true });
+map.addLayer(osm);
+map.fitBounds(new L.LatLngBounds([51,7],[51,7]));
+drawTestLine();
+
+//Adding new maps to the script. Follow the fomat and just change the ".png" link you get from map warper.
+//Please maintain the naming convention to make it eay for use.
+//map naming convention: <cityname><"map"><ascending int>. eg. newyork1, newyork2 etc.
+
+var londonmap1 = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'your.mapbox.project.id',
+    accessToken: 'your.mapbox.public.access.token'
+})
+
+var romemap1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'your.mapbox.project.id',
+    accessToken: 'your.mapbox.public.access.token'
+});
+
+//Vishnu
+var romemap2 = new L.tileLayer('http://mapwarper.net/maps/tile/15087/{z}/{x}/{y}.png?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+    maxZoom: 18,
+    id: 'your.mapbox.project.id',
+    accessToken: 'your.mapbox.public.access.token'
+});
+
+var currentMap;//testing whether this assigment will work. It does work!
+
+var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
+		marker.bindPopup("<b>ROME</b>").openPopup();
+map.setView([41.9028, 12.4964], 14);
+
+function drawTestLine() {
+    var lat = 51;
+    var long = 7;
+    for (var i = 0; i < 50; i++) {
+
+        var myCircle = new L.Circle(new L.LatLng(lat, long),3);
+        myCircle.on('click',
+            function (e) {
+                popup = new L.Popup();
+                popup.setLatLng(this.getLatLng());
+
+                var popuptxt = "Hello!";
+                alert("I am the click function");
+                        popup.setContent(popuptxt);
+
+                        map.openPopup(popup);
+
+
+            });
+        myLayerGroup.addLayer(myCircle);
+            lat = lat + 0.0001;
+            long = long + 0.0001;
+
+    }
+    map.addLayer(myLayerGroup);
+};
+
+L.DomEvent.on(L.DomUtil.get('b1'), 'click', function () {
+  map.addLayer(myLayerGroup);
+});
+L.DomEvent.on(L.DomUtil.get('b2'), 'click', function () {
+  map.removeLayer(myLayerGroup);
+});
+
+//Go to the city input by the user.
+function othername() {
+	
+    var citySelected = document.getElementById("userInput").value;
+    
+    if(citySelected==="Rome"){
+        map.setView([41.9028, 12.4964], 13, {animation: true});
+        
+    }
+    if(citySelected==="London"){
+        map.setView([51.5074, -0.1278], 13, {animation: true});
+    }
+    return citySelected; //vishnu
+};
+
+/* When the user clicks on the button, 
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+	document.getElementById("romeDropdown").classList.toggle("show");
+}
+
+// Close the dropdown menu if the user clicks outside of it
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    var i;
+    for (i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+</script>
+
+<form id="form" onsubmit="return false;">
+     Enter City Name: <input type="text" style="color: #FFFFFF; background-color: #72A4D2;" id="userInput" />
+     <input type="submit" onclick="othername();" />
+</form>
+
+
+
+<!-- Setting Opacity for the Map -->
+Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+<span id="rangeFinal">0</span>
+
+<script type="text/javascript">
+function showValueFinal(newValue) {
+		document.getElementById("rangeFinal").innerHTML=1-newValue/100;
+		currentMap.setOpacity(1-newValue/100);
+}
+</script>
+
+<!-- The code for adding Rome Maps starts.  -->
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn"> Dropdown</button>
+  <div id="romeDropdown" class="dropdown-content">
+    <a onclick="rome(0)" href="#">RomeMap1</a>
+    <a onclick="rome(1)" href="#">RomeMap2</a>
+  </div>
+</div>
+
+<script type="text/javascript">
+function rome(num) {
+	if(num == 0){ 
+    	if (map.hasLayer(romemap1)) {
+    		map.removeLayer(romemap1);
+    	}
+    	else {
+    		map.addLayer(romemap1);
+    		currentMap = romemap1;
+    	}
+    } else if (num == 1) {
+    	if (map.hasLayer(romemap2)) {
+    		map.removeLayer(romemap2);
+    	}
+    	else {
+    		map.addLayer(romemap2);
+    		currentMap = romemap2;
+    	}
+    }
+}
+</script>
+<!-- The code for adding Rome Maps ends.  -->
+
+<div align="right">
+<form action="demo_form.asp">
+ Filter Option: <input type="text" style="color: #FFFFFF; background-color: #72A4D2;" name="fname"><input type="submit" value="Submit"><br>
+ Filter Option: <input type="text" style="color: #FFFFFF; background-color: #72A4D2;" name="lname"><input type="submit" value="Submit"><br>
+ Filter Option: <input type="text" style="color: #FFFFFF; background-color: #72A4D2;" name="lname"><input type="submit" value="Submit"><br>
+</form>
+</div>
+</body>
+
+</html>
