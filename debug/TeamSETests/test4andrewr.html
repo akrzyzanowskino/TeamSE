@@ -31,14 +31,18 @@ html, body, #map {
 	<!--Map Selection and Opacity Sliders -->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a><input type="checkbox" id="cbox1" value="first_checkbox"
+		<!--<a><input type="checkbox" id="cbox1" value="first_checkbox"
 			onclick="handleClick(this)"> Show ancient Rome map <label></label>
 			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10"onchange="showValue(this.value)" />
-		</a> </a> <a><input type="checkbox" id="cbox2" value="second_checkbox"
-			onclick="handleClickL(this)"> Show ancient London map <label></label>
+				step="10"onchange="showValue(this.value)" />-->
+				<a onclick="rome(0)" href="#">RomeMap1</a>
+    <a onclick="rome(1)" href="#">RomeMap2</a>
+    Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+<span id="rangeFinal">0</span>
+		<!--  </a> </a> <a><input type="checkbox" id="cbox2" value="second_checkbox"
+			 onclick="handleClickL(this)"> Show ancient London map <label></label> 
 			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10" onchange="showValue(this.value)"/>
+				step="10" onchange="showValue(this.value)"/>-->
 		</a> </a> <a>
 			<form id="form" onsubmit="return false;" action="">
 				Enter City Name: <input type="text" id="userInput" /> Submit: <input
@@ -55,7 +59,7 @@ html, body, #map {
 <ul>
 
   <li class="dropdown">
-    <a href="#" class="dropbtn">Dropdown</a>
+    <a href="#" class="dropbtn">Markers By Century</a>
     <div class="dropdown-content" id = "ahh">
       <a id="fourteen" onclick="show1314()" href="#">14th and Older</a>
 	  <a id ="fifteen" onclick="show15()" href="#">15th Century</a>
@@ -91,8 +95,8 @@ html, body, #map {
 		/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-		}
+			}
+		
 		/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
@@ -101,6 +105,13 @@ html, body, #map {
 	</script>
 	<div id="map"></div>
 
+
+<script type="text/javascript">
+function showValueFinal(newValue) {
+		document.getElementById("rangeFinal").innerHTML=1-newValue/100;
+		currentMap.setOpacity(1-newValue/100);
+}
+</script>
 	<script type="text/javascript">
 		var map;
 		var myLayerGroup = new L.LayerGroup();
@@ -135,6 +146,47 @@ html, body, #map {
 					id : 'your.mapbox.project.id',
 					accessToken : 'your.mapbox.public.access.token'
 				});
+		
+		var londonmap1 = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		})
+		var romemap1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		//Vishnu
+		var romemap2 = new L.tileLayer('http://mapwarper.net/maps/tile/15087/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		var currentMap
+		
+		function rome(num) {
+			if(num == 0){ 
+		    	if (map.hasLayer(romemap1)) {
+		    		map.removeLayer(romemap1);
+		    	}
+		    	else {
+		    		map.addLayer(romemap1);
+		    		currentMap = romemap1;
+		    	}
+		    } else if (num == 1) {
+		    	if (map.hasLayer(romemap2)) {
+		    		map.removeLayer(romemap2);
+		    	}
+		    	else {
+		    		map.addLayer(romemap2);
+		    		currentMap = romemap2;
+		    	}
+		    }
+		}
 		
 		var redMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_red.png',
