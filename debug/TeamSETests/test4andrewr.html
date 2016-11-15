@@ -56,7 +56,15 @@ html, body, #map {
 
   <li class="dropdown">
     <a href="#" class="dropbtn">Dropdown</a>
-    <div class="dropdown-content">
+    <div class="dropdown-content" id = "ahh">
+      <a id="fourteen" onclick="show1314()" href="#">14th and Older</a>
+	  <a id ="fifteen" onclick="show15()" href="#">15th Century</a>
+      <a id="sixteen" onclick="show16()" href="#">16th Century</a>
+      <a id="seventeen" onclick="show17()" href="#">17th Century</a>
+      <a id="eighteen" onclick="show18()" href="#">18th Century</a>
+      <a id="nineteen" onclick="show19()" href="#">19th Century</a>
+      <a id="twenty" onclick="show20()" href="#">20th Century</a>
+    <!-- <div class="dropdown-content">
     <a onclick="show13()" href="#">13th Century</a>
     <a onclick="show14()" href="#">14th Century</a>
     <a onclick="show15()" href="#">15th Century</a>
@@ -65,7 +73,7 @@ html, body, #map {
       <a onclick="show18()" href="#">18th Century</a>
       <a onclick="show19()" href="#">19th Century</a>
       <a onclick="show20()" href="#">20th Century</a>
-      <a onclick="showAll()" href="#">All of the Above</a>
+      <a onclick="showAll()" href="#">All of the Above</a>-->
     </div>
   </li>
 </ul>
@@ -221,6 +229,11 @@ html, body, #map {
 			var input2 = document.getElementById("userInput2").value;
 			showRiones(input2);
 		}
+		var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;
+		function show1314(){
+			f=!f;
+				showMarkers(1314);
+		}
 		function show13(){
 			showMarkers(13);
 		}
@@ -228,30 +241,58 @@ html, body, #map {
 			showMarkers(14);
 		}
 		function show15(){
-			showMarkers(15);
+			ff=!ff;
+				showMarkers(15);
 		}
 		function show16(){
-			showMarkers(16);
+			s=!s;
+				showMarkers(16);
 		}
- function show17() {
-			showMarkers(17);
+ 		function show17() {
+			ss=!ss;
+ 			showMarkers(17);
 		};
 		function show18() {
-			showMarkers(18);
+			e=!e;
+				showMarkers(18);
 		};		
 		function show19() {
-			showMarkers(19);
+			n=!n;
+				showMarkers(19);
 		};
 		function show20() {
-			showMarkers(20);
+			t=!t;
+				showMarkers(20);
 		};
 		function showAll() {
 			showMarkers(0);
 		};		
+		
+		function setDefaultNames(){
+			 document.getElementById("fourteen").innerHTML="14th and Older";
+			 				document.getElementById("fifteen").innerHTML="15th Century";
+			 			    document.getElementById("seventeen").innerHTML="17th Century";
+			 			    document.getElementById("sixteen").innerHTML="16th Century";
+			 			    document.getElementById("eighteen").innerHTML="18th Century";
+			 			    document.getElementById("nineteen").innerHTML="19th Century";
+			 			    document.getElementById("twenty").innerHTML="20th Century";
+		};
 		function showMarkers(num) {
 			var arlen;
 			map.removeLayer(markersTest);
 			markersTest = new L.FeatureGroup();
+			setDefaultNames();
+			if(f || num==0){
+			    arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			    }
+			    arlen = fr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
+			    }
+			    document.getElementById("fourteen").innerHTML="&#9745;14th and Older";
+			   }
 			if(num==13 || num==0){
 			    arlen = thr.length;
 			    for (var i = 0; i < arlen; i++) {
@@ -264,39 +305,45 @@ html, body, #map {
 			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
 			    }
 			   }
-			if(num==15 || num==0){
+			if(ff || num==0){
 			    arlen = fv.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(fv[i].latitude,fv[i].longitude,fv[i].dedication,fv[i].century,fv[i].rione,fv[i].roma,fv[i].image,blueMarker);
 			    }
+			    document.getElementById("fifteen").innerHTML="&#9745;15th Century";
 			   }
-			if(num==16 || num==0){
+			if(s || num==0){
 			    arlen = sx.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,whiteMarker);
 			    }
+			    document.getElementById("sixteen").innerHTML="&#9745;16th Century";
 			   }
-			if(num==17 || num==0){
+			if(ss || num==0){
 			    arlen = svn.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(svn[i].latitude,svn[i].longitude,svn[i].dedication,svn[i].century,svn[i].rione,svn[i].roma,svn[i].image,orangeMarker);
 			    }
+			    document.getElementById("seventeen").innerHTML="&#9745;17th Century";
 			   }
 			   
-			   if(num==19 || num==0){
+			   if(n || num==0){
 			    arlen = nin.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(nin[i].latitude,nin[i].longitude,nin[i].dedication,nin[i].century,nin[i].rione,nin[i].roma,nin[i].image,greenMarker);
 			    }
+			    document.getElementById("nineteen").innerHTML="&#9745;19th Century";
 			   }
-			   if(num==20 || num==0){
+			   if(t || num==0){
 			    arlen = ten.length;
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(ten[i].latitude,ten[i].longitude,ten[i].dedication,ten[i].century,ten[i].rione,ten[i].roma,ten[i].image,purpleMarker);
 			    }
+			    document.getElementById("twenty").innerHTML="&#9745;20th Century";
 			   }
-			   if(num==18 || num==0){
+			   if(e || num==0){
 			    arlen = eig.length;
+			    document.getElementById("eighteen").innerHTML="&#9745;18th Century";
 			    for (var i = 0; i < arlen; i++) {
 			         addMarker(eig[i].latitude,eig[i].longitude,eig[i].dedication,eig[i].century,eig[i].rione,eig[i].roma,eig[i].image,yellowMarker);
 			   				   map.addLayer(markersTest);	
