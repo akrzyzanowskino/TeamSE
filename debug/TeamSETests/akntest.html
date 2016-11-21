@@ -63,9 +63,58 @@ html, body, #map {
     </div>
   </li>
 </ul>
-		
-	</div>
-	
+
+<!-- Drop Down For new cities -->
+
+<ul>
+
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Add New City</a>
+    <div class="dropdown-content">
+      <form action="action_page.php">
+      	City:<br><input type="text" name="cityName"><br>
+ 	 	Latitude:<br><input type="text" name="Lat"><br>
+ 	 	Longitude:<br><input type="text" name="Lon"><br>
+ 	 	Spreadsheet:<br><input type="text" name="SpreadSheet"><br>
+ 	 	Map<br><input type="text" name="Map1"><br>
+ 	 	Map<br><input type="text" name="Map2"><br>
+ 	 <br>
+  	<input type="submit" value="Submit">
+	</form>
+    </div>
+  </li>
+</ul>
+
+
+<script>
+jQuery(document).ready(function (e) {
+    function t(t) {
+        e(t).bind("click", function (t) {
+            t.preventDefault();
+            e(this).parent().fadeOut()
+        })
+    }
+    e(".dropdown-toggle").click(function () {
+        var t = e(this).parents(".button-dropdown").children(".dropdown-menu").is(":hidden");
+        e(".button-dropdown .dropdown-menu").hide();
+        e(".button-dropdown .dropdown-toggle").removeClass("active");
+        if (t) {
+            e(this).parents(".button-dropdown").children(".dropdown-menu").toggle().parents(".button-dropdown").children(".dropdown-toggle").addClass("active")
+        }
+    });
+    e(document).bind("click", function (t) {
+        var n = e(t.target);
+        if (!n.parents().hasClass("button-dropdown")) e(".button-dropdown .dropdown-menu").hide();
+    });
+    e(document).bind("click", function (t) {
+        var n = e(t.target);
+        if (!n.parents().hasClass("button-dropdown")) e(".button-dropdown .dropdown-toggle").removeClass("active");
+    })
+});
+</script>
+
+
+</div>	
 <div id="main">
 <span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span></div>
  
