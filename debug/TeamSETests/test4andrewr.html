@@ -81,6 +81,27 @@ html, body, #map {
     </div>
   </li>
 </ul>
+
+<!-- Drop Down For new cities -->
+
+<ul>
+
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Add New City</a>
+    <div class="dropdown-content">
+      <form action="action_page.php">
+      	City:<br><input type="text" name="cityName"><br>
+ 	 	Latitude:<br><input type="text" name="Lat"><br>
+ 	 	Longitude:<br><input type="text" name="Lon"><br>
+ 	 	Spreadsheet:<br><input type="text" name="SpreadSheet"><br>
+ 	 	Map<br><input type="text" name="Map1"><br>
+ 	 	Map<br><input type="text" name="Map2"><br>
+ 	 <br>
+  	<input type="submit" onclick="addingtoAAA(cityName,Lat,Lon,SpreadSheet,Map1,Map2);">
+	</form>
+    </div>
+  </li>
+</ul>
 	
 	</div>
 	
@@ -446,7 +467,64 @@ function showValueFinal(newValue) {
 			}
 		}
 		}
-	
+		
+		//taking input from ui for adding a new city to the AAA spreadsheet
+function addingtoAAA(aname, alat, along, asheet, am1, am2){
+	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=jm973MjOq3hcOFWAxiAshEJV");
+	var u = JSON.parse(testvar4);
+	var arowDat= u["rows"];
+	var aarrayLength=arowDat.length;
+	var cname;
+	var clat;
+	var clong;
+	var sheet;
+	var m1;
+	var m2;
+	arowDat[aarayLength+1][0]=aname;
+	arowDat[aarayLength+1][1]=alat;
+	arowDat[aarayLength+1][2]=along;
+	arowDat[aarayLength+1][3]=asheet;
+	arowDat[aarayLength+1][4]=am1;
+	arowDat[aarayLength+1][5]=am2;
+} 	
+		
+		//reading all the cities from AAA which can then have their individual marker data manipulated by a modified getAndUsedFusionData() method
+function accessingAAAdata(){
+	var testvar3 = httpGet("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=jm973MjOq3hcOFWAxiAshEJV");
+	var cname;
+	var clat;
+	var clong;
+	var sheet;
+	var m1;
+	var m2;
+	var m3;
+	var m4;
+	var c0=[];
+	var c1=[];
+	var c2=[];
+	var c3=[];
+	var c4=[];
+	var c5=[];
+	var c6=[];
+	var c7=[];
+	var c8=[];
+	var c9=[];
+	var u = JSON.parse(testvar3);
+	var arowDat= u["rows"];
+	var aarrayLength=arowDat.length;
+	for (var i=0; i<aarrayLength; i++){
+		cname= arowDat[i][0];
+		clat= arowDat[i][1];
+		clong= arowDat[i][2];
+		sheet= arowDat[i][3];
+		m1= arowDat[i][4];
+		m2= arowDat[i][5];
+		var brr = {cityname:cname,citylatitude:clat, citylongitude:clong,citysheet:sheet,citymap1:m1,citymap2:m2};
+		ci.push(brr);
+		//method will end with call to method below with the city's sheet as a parameter, so that each city's markers will be proccessed, then added
+	}
+}
+		
 function getAndUseFusionData(){
     var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var lat;
