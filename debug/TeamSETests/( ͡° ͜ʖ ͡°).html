@@ -267,6 +267,7 @@ function showValueFinal(newValue) {
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
         getAndUseFusionData();
+        accessingAAAdata();
         var thr;
         var fr;
         var fv;
@@ -358,7 +359,7 @@ function showValueFinal(newValue) {
 			if(f || num==0){
 			    arlen = thr.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,pinkMarker);
 			    }
 			    arlen = fr.length;
 			    for (var i = 0; i < arlen; i++) {
@@ -388,7 +389,7 @@ function showValueFinal(newValue) {
 			if(s || num==0){
 			    arlen = sx.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,whiteMarker);
+			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,redMarker);
 			    }
 			    document.getElementById("sixteen").innerHTML="&#9745;16th Century";
 			   }
