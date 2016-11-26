@@ -232,8 +232,8 @@ function showValueFinal(newValue) {
 		var greenMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		var blueMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
@@ -245,8 +245,8 @@ function showValueFinal(newValue) {
 		var purpleMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [14,40], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-11, -130] // point from which the popup should open relative to the iconAnchor
 		});
 		var pinkMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
@@ -600,7 +600,7 @@ function httpGet(theUrl)
 }
 var markers = L.markerClusterGroup();
 function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
-	var marker = new L.marker([Lat,Long],{icon: Color});
+	var marker = new L.Marker([Lat,Long], {icon: Color});
 	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
     markersTest.addLayer(marker);
     
