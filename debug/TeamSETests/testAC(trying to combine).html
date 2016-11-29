@@ -10,6 +10,7 @@
 <!-- webpage css -->
 <link rel="stylesheet" href="test.css" />
 <link rel="stylesheet" href="../css/screen.css" />
+<link rel="shortcut icon" type="img/x-icon" href="github.com/akrzyzanowskino/TeamSE/debug/TeamSETests/markers"/>
 <script type="text/javascript" src="../../build/deps.js"></script>
 <script src="../leaflet-include.js" type="text/javascript"></script>
 </head>
@@ -21,7 +22,6 @@ body {
 	padding: 0;
 	margin: 0;
 }
-
 html, body, #map {
 	height: 100%;
 	width: 100%;
@@ -31,43 +31,88 @@ html, body, #map {
 	<!--Map Selection and Opacity Sliders -->
 	<div id="mySidenav" class="sidenav">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		<a><input type="checkbox" id="cbox1" value="first_checkbox"
+		<!--<a><input type="checkbox" id="cbox1" value="first_checkbox"
 			onclick="handleClick(this)"> Show ancient Rome map <label></label>
 			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10"onchange="showValue(this.value)" />
-		</a> </a> <a><input type="checkbox" id="cbox2" value="second_checkbox"
-			onclick="handleClickL(this)"> Show ancient London map <label></label>
+				step="10"onchange="showValue(this.value)" />-->
+				<a onclick="rome(0)" href="#">RomeMap1</a>
+				 <a onclick="rome(1)" href="#">RomeMap2</a>
+				
+				<!--is actually florence, not rome, god this code is bad>--->
+				<a onclick="rome(2)" href="#">FlorenceMap1</a>
+				<a onclick="rome(3)" href="#">LondonMap1</a>
+				
+				    Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+<span id="rangeFinal">0</span>
+		<!--  </a> </a> <a><input type="checkbox" id="cbox2" value="second_checkbox"
+			 onclick="handleClickL(this)"> Show ancient London map <label></label> 
 			<a> Opacity <input type="range" min="0" max="100" value="0"
-				step="10" onchange="showValue(this.value)"/>
+				step="10" onchange="showValue(this.value)"/>-->
 		</a> </a> <a>
 			<form id="form" onsubmit="return false;" action="">
 				Enter City Name: <input type="text" id="userInput" /> Submit: <input
 					type="submit" onclick="othername();" />
+			</form>
+			<!-- Attempt at Rione button sort -->
+		</a> </a> <a>
+			<form id="form" onsubmit="return false;" action="">
+				Show Shrines by Rione: <input type="text" id="userInput2" /> Submit: <input
+					type="submit" onclick="rioneSort();" />
 			</form>
 		</a>
 <!-- demo dropdown menu -->
 <ul>
 
   <li class="dropdown">
-    <a href="#" class="dropbtn">Dropdown</a>
+    <a href="#" class="dropbtn">Markers By Century</a>
     <div class="dropdown-content" id = "ahh">
-      <a id ="fourteen" onclick="show14()" href="#">14th and Older</a>
+      <a id="fourteen" onclick="show1314()" href="#">14th and Older</a>
 	  <a id ="fifteen" onclick="show15()" href="#">15th Century</a>
-      <a id ="sixteen" onclick="show16()" href="#">16th Century</a>
-      <a id ="seventeen" onclick="show17()" href="#">17th Century</a>
-      <a id ="eighteen" onclick="show18()" href="#">18th Century</a>
-      <a id ="nineteen" onclick="show19()" href="#">19th Century</a>
-      <a id ="twenty" onclick="show20()" href="#">20th Century</a>
-      
+      <a id="sixteen" onclick="show16()" href="#">16th Century</a>
+      <a id="seventeen" onclick="show17()" href="#">17th Century</a>
+      <a id="eighteen" onclick="show18()" href="#">18th Century</a>
+      <a id="nineteen" onclick="show19()" href="#">19th Century</a>
+      <a id="twenty" onclick="show20()" href="#">20th Century</a>
+    <!-- <div class="dropdown-content">
+    <a onclick="show13()" href="#">13th Century</a>
+    <a onclick="show14()" href="#">14th Century</a>
+    <a onclick="show15()" href="#">15th Century</a>
+    <a onclick="show16()" href="#">16th Century</a>
+      <a onclick="show17()" href="#">17th Century</a>
+      <a onclick="show18()" href="#">18th Century</a>
+      <a onclick="show19()" href="#">19th Century</a>
+      <a onclick="show20()" href="#">20th Century</a>
+      <a onclick="showAll()" href="#">All of the Above</a>-->
     </div>
   </li>
 </ul>
-		
+
+<!-- Drop Down For new cities -->
+
+<ul>
+
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Add New City</a>
+    <div class="dropdown-content">
+      <form action="action_page.php">
+      	City:<br><input type="text" name="cityName"><br>
+ 	 	Latitude:<br><input type="text" name="Lat"><br>
+ 	 	Longitude:<br><input type="text" name="Lon"><br>
+ 	 	Spreadsheet:<br><input type="text" name="SpreadSheet"><br>
+ 	 	Map<br><input type="text" name="Map1"><br>
+ 	 	Map<br><input type="text" name="Map2"><br>
+ 	 <br>
+  	<input type="submit" onclick="addingtoAAA(cityName,Lat,Lon,SpreadSheet,Map1,Map2);">
+	</form>
+    </div>
+  </li>
+</ul>
+	
 	</div>
 	
 
 	<div id="main">
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;
+		<span style="font-size: 30px; cursor: pointer" onclick="openNav()" onclick="closeNav()">&#9776;
 			Menu</span>
 
 	</div>
@@ -75,11 +120,9 @@ html, body, #map {
 	<script type="text/javascript">
 		/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
 		function openNav() {
-		alert(document.getElementById("ahh").textContent);
 			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-		}
-
+			}
+		
 		/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
@@ -88,15 +131,20 @@ html, body, #map {
 	</script>
 	<div id="map"></div>
 
+
+<script type="text/javascript">
+function showValueFinal(newValue) {
+		document.getElementById("rangeFinal").innerHTML=1-newValue/100;
+		currentMap.setOpacity(1-newValue/100);
+}
+</script>
 	<script type="text/javascript">
 		var map;
 		var myLayerGroup = new L.LayerGroup();
-
 		// set up the map
 		map = new L.Map('map', {
 			preferCanvas : true
 		});
-
 		// create the tile layer with correct attribution
 		var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
 		var osmAttrib = 'Map data © OpenStreetMap contributors';
@@ -108,23 +156,122 @@ html, body, #map {
 		});
 		map.addLayer(osm);
 		map.fitBounds(new L.LatLngBounds([ 51, 7 ], [ 51, 7 ]));
-		var testing = new L.tileLayer(
-				'http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}',
-				{
-					attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://mapbox.com">Mapbox</a>',
-					maxZoom : 18,
-					id : 'your.mapbox.project.id',
-					accessToken : 'your.mapbox.public.access.token'
-				})
-
-		var testing1 = new L.tileLayer(
-				'http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}',
-				{
-					attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://mapbox.com">Mapbox</a>',
-					maxZoom : 18,
-					id : 'your.mapbox.project.id',
-					accessToken : 'your.mapbox.public.access.token'
-				});
+		var londonMap1 = new L.tileLayer('http://warp.worldmap.harvard.edu/maps/tile/4194/z/x/y.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		var romemap1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		//Vishnu
+		var romemap2 = new L.tileLayer('http://mapwarper.net/maps/tile/15087/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		var florenceMap1 = new L.tileLayer('http://mapwarper.net/maps/tile/11189/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		var currentMap;
+		
+		function rome(num) {
+			if(num == 0){ 
+		    	if (map.hasLayer(romemap1)) {
+		    		map.removeLayer(romemap1);
+		    	}
+		    	else {
+		    		map.addLayer(romemap1);
+		    		currentMap = romemap1;
+		    	}
+		    } else if (num == 1) {
+		    	if (map.hasLayer(romemap2)) {
+		    		map.removeLayer(romemap2);
+		    	}
+		    	else {
+		    		map.addLayer(romemap2);
+		    		currentMap = romemap2;
+		    	}
+		     } else if (num == 2) {
+		    	if (map.hasLayer(florenceMap1)) {
+		    		map.removeLayer(florenceMap1);
+		    	}
+		    	else {
+		    		map.addLayer(florenceMap1);
+		    		currentMap = florenceMap1;
+		    	}
+		    } else if (num == 3) {
+		    	if (map.hasLayer(londonMap1)) {
+		    		map.removeLayer(londonMap1);		    		
+		    	}
+		    	else {
+		    		alert(londonMap1);
+		    		map.addLayer(londonMap1);
+		    		currentMap = londonMap1;
+		    	}
+		}
+		}
+		var redMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_red.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var orangeMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_orange.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var yellowMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_yellow.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var greenMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
+		});
+		var blueMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var purpleMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [14,40], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-11, -130] // point from which the popup should open relative to the iconAnchor
+		});
+		var pinkMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var whiteMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_white.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
 		var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
 		marker.bindPopup("<b>ROME</b>").openPopup();
 		map.setView([ 41.9028, 12.4964 ], 14);
@@ -144,7 +291,6 @@ html, body, #map {
 		L.DomEvent.on(L.DomUtil.get('b2'), 'click', function() {
 			map.removeLayer(myLayerGroup);
 		});
-
 		function othername() {
 			var input = document.getElementById("userInput").value;
 			if (input === "Rome") {
@@ -162,81 +308,104 @@ html, body, #map {
 			testing.opacity(value);
 		};
 		
-	var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;	
- 	function show14() {
- 		f = !f;
+		function rioneSort(){
+			var input2 = document.getElementById("userInput2").value;
+			showRiones(input2);
+		}
+		var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;
+		function show1314(){
+			f=!f;
+				showMarkers(1314);
+		}
+		function show13(){
+			showMarkers(13);
+		}
+		function show14(){
 			showMarkers(14);
-		};
-	function show15() {
-		ff = !ff;	
-			showMarkers(15);
-		};
-	function show16() {
-		s = !s;
-			showMarkers(16);
-		}; 
-	 function show17() {
-			ss = !ss;
-			showMarkers(17);
+		}
+		function show15(){
+			ff=!ff;
+				showMarkers(15);
+		}
+		function show16(){
+			s=!s;
+				showMarkers(16);
+		}
+ 		function show17() {
+			ss=!ss;
+ 			showMarkers(17);
 		};
 		function show18() {
-			e = !e;
-			showMarkers(18);
+			e=!e;
+				showMarkers(18);
 		};		
 		function show19() {
-			n = !n;
-			showMarkers(19);
+			n=!n;
+				showMarkers(19);
 		};
 		function show20() {
-			t = !t;
-			showMarkers(20);
+			t=!t;
+				showMarkers(20);
 		};
-		function setDefaultNames(){
-		 document.getElementById("fourteen").innerHTML="14th and Older";
-		 				document.getElementById("fifteen").innerHTML="15th Century";
-		 			    document.getElementById("seventeen").innerHTML="17th Century";
-		 			    document.getElementById("sixteen").innerHTML="16th Century";
-		 			    document.getElementById("eighteen").innerHTML="18th Century";
-		 			    document.getElementById("nineteen").innerHTML="19th Century";
-		 			    document.getElementById("twenty").innerHTML="20th Century";
-		 			    
-		 
+		function showAll() {
+			showMarkers(0);
+		};		
 		
+		function setDefaultNames(){
+			 document.getElementById("fourteen").innerHTML="14th and Older";
+			 				document.getElementById("fifteen").innerHTML="15th Century";
+			 			    document.getElementById("seventeen").innerHTML="17th Century";
+			 			    document.getElementById("sixteen").innerHTML="16th Century";
+			 			    document.getElementById("eighteen").innerHTML="18th Century";
+			 			    document.getElementById("nineteen").innerHTML="19th Century";
+			 			    document.getElementById("twenty").innerHTML="20th Century";
 		};
 		function showMarkers(num) {
 			var arlen;
 			map.removeLayer(markersTest);
 			markersTest = new L.FeatureGroup();
 			setDefaultNames();
-			if(num==0 || f){
+			if(f || num==0){
+			    arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,pinkMarker);
+			    }
 			    arlen = fr.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma);
-			    }
-			     arlen = thr.length;
-			    for (var i = 0; i < arlen; i++) {
-			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma);
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
 			    }
 			    document.getElementById("fourteen").innerHTML="&#9745;14th and Older";
+			   }
+			if(num==13 || num==0){
+			    arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			    }
+			   }
+			if(num==14 || num==0){
+			    arlen = fr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
+			    }
 			   }
 			if(ff || num==0){
 			    arlen = fv.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(fv[i].latitude,fv[i].longitude,fv[i].dedication,fv[i].century,fv[i].rione,fv[i].roma);
+			         addMarker(fv[i].latitude,fv[i].longitude,fv[i].dedication,fv[i].century,fv[i].rione,fv[i].roma,fv[i].image,blueMarker);
 			    }
 			    document.getElementById("fifteen").innerHTML="&#9745;15th Century";
 			   }
 			if(s || num==0){
 			    arlen = sx.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma);
+			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,redMarker);
 			    }
 			    document.getElementById("sixteen").innerHTML="&#9745;16th Century";
 			   }
 			if(ss || num==0){
 			    arlen = svn.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(svn[i].latitude,svn[i].longitude,svn[i].dedication,svn[i].century,svn[i].rione,svn[i].roma);
+			         addMarker(svn[i].latitude,svn[i].longitude,svn[i].dedication,svn[i].century,svn[i].rione,svn[i].roma,svn[i].image,orangeMarker);
 			    }
 			    document.getElementById("seventeen").innerHTML="&#9745;17th Century";
 			   }
@@ -244,22 +413,22 @@ html, body, #map {
 			   if(n || num==0){
 			    arlen = nin.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(nin[i].latitude,nin[i].longitude,nin[i].dedication,nin[i].century,nin[i].rione,nin[i].roma);
+			         addMarker(nin[i].latitude,nin[i].longitude,nin[i].dedication,nin[i].century,nin[i].rione,nin[i].roma,nin[i].image,greenMarker);
 			    }
 			    document.getElementById("nineteen").innerHTML="&#9745;19th Century";
 			   }
 			   if(t || num==0){
 			    arlen = ten.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(ten[i].latitude,ten[i].longitude,ten[i].dedication,ten[i].century,ten[i].rione,ten[i].roma);
+			         addMarker(ten[i].latitude,ten[i].longitude,ten[i].dedication,ten[i].century,ten[i].rione,ten[i].roma,ten[i].image,purpleMarker);
 			    }
 			    document.getElementById("twenty").innerHTML="&#9745;20th Century";
 			   }
 			   if(e || num==0){
 			    arlen = eig.length;
-			     document.getElementById("eighteen").innerHTML="&#9745;18th Century";			    
+			    document.getElementById("eighteen").innerHTML="&#9745;18th Century";
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(eig[i].latitude,eig[i].longitude,eig[i].dedication,eig[i].century,eig[i].rione,eig[i].roma);
+			         addMarker(eig[i].latitude,eig[i].longitude,eig[i].dedication,eig[i].century,eig[i].rione,eig[i].roma,eig[i].image,yellowMarker);
 			   				   map.addLayer(markersTest);	
 			    }
 			   }
@@ -267,60 +436,170 @@ html, body, #map {
 			   map.addLayer(markersTest);
 			   
 		};							
+		function showRiones(rio){
+			var arlen=reg.length;
+			map.removeLayer(markersTest);
+			markersTest = new L.FeatureGroup();
+			for (var i=0; i<arlen; i++){
+				if(reg[i].rione==rio){
+					if(reg[i].century==13){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==14){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==15){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,blueMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==16){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,whiteMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==17){
+				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+				   map.addLayer(markersTest);
+					}
+					if(reg[i].century==18){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,yellowMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==19){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==20){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,purpleMarker);
+						   map.addLayer(markersTest);
+							}
+			}
+		}
+		}
 		
-	
+		//taking input from ui for adding a new city to the AAA spreadsheet
+function addingtoAAA(aname, alat, along, asheet, am1, am2){
+	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=jm973MjOq3hcOFWAxiAshEJV");
+	var u = JSON.parse(testvar4);
+	var arowDat= u["rows"];
+	var aarrayLength=arowDat.length;
+	var cname;
+	var clat;
+	var clong;
+	var sheet;
+	var m1;
+	var m2;
+	arowDat[aarayLength+1][0]=aname;
+	arowDat[aarayLength+1][1]=alat;
+	arowDat[aarayLength+1][2]=along;
+	arowDat[aarayLength+1][3]=asheet;
+	arowDat[aarayLength+1][4]=am1;
+	arowDat[aarayLength+1][5]=am2;
+} 	
+		
+		//reading all the cities from AAA which can then have their individual marker data manipulated by a modified getAndUsedFusionData() method
+function accessingAAAdata(){
+	var testvar3 = httpGet("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=jm973MjOq3hcOFWAxiAshEJV");
+	var cname;
+	var clat;
+	var clong;
+	var sheet;
+	var m1;
+	var m2;
+	var m3;
+	var m4;
+	var c0=[];
+	var c1=[];
+	var c2=[];
+	var c3=[];
+	var c4=[];
+	var c5=[];
+	var c6=[];
+	var c7=[];
+	var c8=[];
+	var c9=[];
+	var u = JSON.parse(testvar3);
+	var arowDat= u["rows"];
+	var aarrayLength=arowDat.length;
+	for (var i=0; i<aarrayLength; i++){
+		cname= arowDat[i][0];
+		clat= arowDat[i][1];
+		clong= arowDat[i][2];
+		sheet= arowDat[i][3];
+		m1= arowDat[i][4];
+		m2= arowDat[i][5];
+		var brr = {cityname:cname,citylatitude:clat, citylongitude:clong,citysheet:sheet,citymap1:m1,citymap2:m2};
+		ci.push(brr);
+		//method will end with call to method below with the city's sheet as a parameter, so that each city's markers will be proccessed, then added
+	}
+}
+		
 function getAndUseFusionData(){
-    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var lat;
-	var longi;
+	var long;
 	var CoO;
 	var RiL;
 	var Rio;
 	var Ded;
+	var IDL;
 	var t = JSON.parse(testvar2);
 	var rowData = t["rows"];
 	var arrayLength = rowData.length;
+    var three=[];
+	var four=[];
+	var five= [];
+	var six = [];
 	var seven = [];
     var eight = [];
     var nine = [];
     var twent = [];
-    var six = [];
-    var five = [];
-    var four = [];
-    var three = [];
+    var region = [];
 	for (var i = 0; i < arrayLength; i++) {
 		lat = rowData[i][0];
-		longi = rowData[i][1];
+		long = rowData[i][1];
 		Ded = rowData[i][2];
 		CoO = rowData[i][3];
 		Rio = rowData[i][4];
 		RiL = rowData[i][5];
-		var arr = {latitude:lat, longitude:longi,dedication:Ded,century:CoO,rione:Rio, roma:RiL};
-			if(CoO==13)
-				three.push(arr);
-			if(CoO==14)
-				four.push(arr);
-			if(CoO==15)
-				five.push(arr);
-			if(CoO==16)
-				six.push(arr);
+		IDL = rowData[i][6];
+		var arr = {latitude:lat, longitude:long,dedication:Ded,century:CoO,rione:Rio, roma:RiL, image:IDL};
+		if(CoO==13)
+			three.push(arr);
+			region.push(arr);
+		if(CoO==14)
+			four.push(arr);
+			region.push(arr);
+		if(CoO==15)
+			five.push(arr);
+			region.push(arr);
+		if(CoO==16)
+			six.push(arr);
+			region.push(arr);
 			if(CoO==17)
 				seven.push(arr);
-			if(CoO==18)
-				eight.push(arr);				
+				region.push(arr);
+			if(CoO==18){
+				eight.push(arr);
+				region.push(arr);
+			}
 			if(CoO==19)
 				nine.push(arr);
+				region.push(arr);
 			if(CoO==20)
 				twent.push(arr);
+				region.push(arr);
 	}
-	thr = three;
-	fr = four;
-	fv = five
-	sx = six;
+	thr=three;
+	fr=four;
+	fv=five;
+	sx=six;
 	svn = seven;
 	eig = eight;
 	nin = nine;
 	ten = twent;
+	reg = region;
 }
 function httpGet(theUrl)
 {
@@ -330,26 +609,12 @@ function httpGet(theUrl)
     return xmlHttp.responseText;
 }
 var markers = L.markerClusterGroup();
-function addMarker(Lat,Long,Name,Century,Rione,Link){
-	var marker = new L.marker([Lat,Long]);
-	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>").openPopup();	
-   
-   var greenIcon = L.icon({
-    iconUrl: 'https://github.com/akrzyzanowskino/TeamSE/tree/master/debug/TeamSETests/markers/marker_green.png',
-    shadowUrl: 'https://s3.amazonaws.com/bos-creates/css/images/marker-shadow.png',
-
-    iconSize:     [25, 41], // size of the icon
-    shadowSize:   [41, 41], // size of the shadow
-    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-    shadowAnchor: [4, 62],  // the same for the shadow
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-});
-   L.marker([41.5, 12.0], {icon: greenIcon}).addTo(map);
-  
+function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
+	var marker = new L.Marker([Lat,Long], {icon: Color});
+	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
     markersTest.addLayer(marker);
     
 }
-
 	</script>
 
 
@@ -374,7 +639,6 @@ function addMarker(Lat,Long,Name,Century,Rione,Link){
 			} else {
 				map.removeLayer(testing1);
 			}
-
 		};
 	</script>
 
