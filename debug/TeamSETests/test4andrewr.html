@@ -266,8 +266,11 @@ function showValueFinal(newValue) {
 		marker.bindPopup("<b>ROME</b>").openPopup();
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
-        getAndUseFusionData();
-        var thr;
+        
+		accessingAAAData();
+		//getAndUseFusionData(1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA);
+        
+		var thr;
         var fr;
         var fv;
         var sx;
@@ -470,7 +473,7 @@ function showValueFinal(newValue) {
 		
 		//taking input from ui for adding a new city to the AAA spreadsheet
 function addingtoAAA(aname, alat, along, asheet, am1, am2){
-	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=jm973MjOq3hcOFWAxiAshEJV");
+	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var u = JSON.parse(testvar4);
 	var arowDat= u["rows"];
 	var aarrayLength=arowDat.length;
@@ -490,7 +493,7 @@ function addingtoAAA(aname, alat, along, asheet, am1, am2){
 		
 		//reading all the cities from AAA which can then have their individual marker data manipulated by a modified getAndUsedFusionData() method
 function accessingAAAdata(){
-	var testvar3 = httpGet("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=jm973MjOq3hcOFWAxiAshEJV");
+	var testvar3 = httpGet("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var cname;
 	var clat;
 	var clong;
@@ -520,13 +523,52 @@ function accessingAAAdata(){
 		m1= arowDat[i][4];
 		m2= arowDat[i][5];
 		var brr = {cityname:cname,citylatitude:clat, citylongitude:clong,citysheet:sheet,citymap1:m1,citymap2:m2};
-		ci.push(brr);
-		//method will end with call to method below with the city's sheet as a parameter, so that each city's markers will be proccessed, then added
+		/*if (i==0){
+			c0.push(brr);
+			getAndUseFusionData(c0.citysheet);
+		}
+		if (i==1){
+			c1.push(brr);
+			getAndUseFusionData(c1.citysheet);
+		}
+		if (i==2){
+			c2.push(brr);
+			getAndUseFusionData(c2.citysheet);
+		}
+		if (i==3){
+			c3.push(brr);
+			getAndUseFusionData(c3.citysheet);
+		}
+		if (i==4){
+			c4.push(brr);
+			getAndUseFusionData(c4.citysheet);
+		}
+		if (i==5){
+			c5.push(brr);
+			getAndUseFusionData(c5.citysheet);
+		}
+		if (i==6){
+			c6.push(brr);
+			getAndUseFusionData(c6.citysheet);
+		}
+		if (i==7){
+			c7.push(brr);
+			getAndUseFusionData(c7.citysheet);
+		}
+		if (i==8){
+			c8.push(brr);
+			getAndUseFusionData(c8.citysheet);
+		}
+		if (i==9){
+			c9.push(brr);
+			getAndUseFusionData(c9.citysheet);
+		}*/
 	}
+	getAndUseFusionData(c0[0].sheet);
 }
 		
-function getAndUseFusionData(){
-    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+function getAndUseFusionData(sheet){
+    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM [sheet]");
 	var lat;
 	var long;
 	var CoO;
