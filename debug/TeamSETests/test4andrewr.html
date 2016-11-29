@@ -278,7 +278,16 @@ function showValueFinal(newValue) {
         var eig;
         var nin;
         var ten;
-var city0;
+		var city0;
+		var city1;
+		var city2;
+		var city3;
+		var city4;
+		var city5;
+		var city6;
+		var city7;
+		var city8;
+		var city9;
 		L.DomEvent.on(L.DomUtil.get('b1'), 'click', function() {
 			map.addLayer(myLayerGroup);
 		});
@@ -526,46 +535,57 @@ function accessingAAAdata(){
 		var brr = {cityname:cname,citylatitude:clat, citylongitude:clong,citysheet:sheet,citymap1:m1,citymap2:m2};
 		if (i==0){
 			c0.push(brr);
-			getAndUseFusionData(c0.citysheet);
+			city0=c0;
+			getAndUseFusionData(city0[0].citysheet);
 		}
 		if (i==1){
 			c1.push(brr);
-			getAndUseFusionData(c1.citysheet);
+			city1=c1;
+			getAndUseFusionData(city1[0].citysheet);
 		}
 		if (i==2){
 			c2.push(brr);
-			getAndUseFusionData(c2.citysheet);
+			city2=c2;
+			getAndUseFusionData(city2[0].citysheet);
 		}
 		if (i==3){
 			c3.push(brr);
-			getAndUseFusionData(c3.citysheet);
+			city3=c3;
+			getAndUseFusionData(city3[0].citysheet);
 		}
 		if (i==4){
 			c4.push(brr);
-			getAndUseFusionData(c4.citysheet);
+			city4=c4;
+			getAndUseFusionData(city4[0].citysheet);
 		}
 		if (i==5){
 			c5.push(brr);
-			getAndUseFusionData(c5.citysheet);
+			city5=c5;
+			getAndUseFusionData(city5[0].citysheet);
 		}
 		if (i==6){
 			c6.push(brr);
-			getAndUseFusionData(c6.citysheet);
+			city6=c6;
+			getAndUseFusionData(city6[0].citysheet);
 		}
 		if (i==7){
 			c7.push(brr);
-			getAndUseFusionData(c7.citysheet);
+			city7=c7;
+			getAndUseFusionData(city7[0].citysheet);
 		}
 		if (i==8){
 			c8.push(brr);
-			getAndUseFusionData(c8.citysheet);
+			city8=c8;
+			getAndUseFusionData(city8[0].citysheet);
 		}
 		if (i==9){
 			c9.push(brr);
-			getAndUseFusionData(c9.citysheet);
+			city9=c9;
+			getAndUseFusionData(city9[0].citysheet);
 		}
-	}	city0=c0 ;
-getAndUseFusionData(city0[0].citysheet);
+	}	
+	city0=c0;
+	getAndUseFusionData(city0[0].citysheet);
 }
 		
 function getAndUseFusionData(sheet){
