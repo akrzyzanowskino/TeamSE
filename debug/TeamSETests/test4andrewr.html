@@ -212,22 +212,22 @@ function showValueFinal(newValue) {
 		var redMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_red.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var orangeMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_orange.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var yellowMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_yellow.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		var greenMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
@@ -238,21 +238,21 @@ function showValueFinal(newValue) {
 		var blueMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var purpleMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [14,40], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-11, -130] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		var pinkMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var whiteMarker = L.icon({
@@ -267,7 +267,7 @@ function showValueFinal(newValue) {
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
         
-		accessingAAAData();
+		accessingAAAdata();
 		//getAndUseFusionData("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
         
 		var thr;
@@ -483,7 +483,7 @@ function showValueFinal(newValue) {
 		
 		//taking input from ui for adding a new city to the AAA spreadsheet
 function addingtoAAA(aname, alat, along, asheet, am1, am2){
-	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLatitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var u = JSON.parse(testvar4);
 	var arowDat= u["rows"];
 	var aarrayLength=arowDat.length;
@@ -499,11 +499,12 @@ function addingtoAAA(aname, alat, along, asheet, am1, am2){
 	arowDat[aarayLength+1][3]=asheet;
 	arowDat[aarayLength+1][4]=am1;
 	arowDat[aarayLength+1][5]=am2;
+	accessingAAAdata();
 } 	
 		
 		//reading all the cities from AAA which can then have their individual marker data manipulated by a modified getAndUsedFusionData() method
 function accessingAAAdata(){
-	var testvar3 = httpGet("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLattitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1cEStfKPHwMGhHddOf5G77fASKtxFDFytgxDzuZrsZ6E&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+	var testvar3 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT CityName, CityLatitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1URffs3sPtmHSYdv0dlcG3Mf7dnEw5alho2DOM7gX&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
 	var cname;
 	var clat;
 	var clong;
@@ -584,13 +585,13 @@ function accessingAAAdata(){
 			getAndUseFusionData(city9[0].citysheet);
 		}
 	}	
-	city0=c0;
-	getAndUseFusionData(city0[0].citysheet);
+	//city0=c0;
+	//getAndUseFusionData(city0[0].citysheet);
 }
 		
 function getAndUseFusionData(sheet){
 	var string2=sheet;
-	var string = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA";
+	var string = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AlzaSyBxp4bTSIL7itaU-XCqRHcK7sggyOjbe60";
 	var testvar2 = httpGet(string2);
 	var lat;
 	var long;
