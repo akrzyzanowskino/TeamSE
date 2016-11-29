@@ -278,6 +278,7 @@ function showValueFinal(newValue) {
         var eig;
         var nin;
         var ten;
+var city0;
 		L.DomEvent.on(L.DomUtil.get('b1'), 'click', function() {
 			map.addLayer(myLayerGroup);
 		});
@@ -523,7 +524,7 @@ function accessingAAAdata(){
 		m1= arowDat[i][4];
 		m2= arowDat[i][5];
 		var brr = {cityname:cname,citylatitude:clat, citylongitude:clong,citysheet:sheet,citymap1:m1,citymap2:m2};
-		/*if (i==0){
+		if (i==0){
 			c0.push(brr);
 			getAndUseFusionData(c0.citysheet);
 		}
@@ -562,9 +563,9 @@ function accessingAAAdata(){
 		if (i==9){
 			c9.push(brr);
 			getAndUseFusionData(c9.citysheet);
-		}*/
-	}
-	getAndUseFusionData(c0[0].citysheet);
+		}
+	}	city0=c0 ;
+getAndUseFusionData(city0[0].citysheet);
 }
 		
 function getAndUseFusionData(sheet){
