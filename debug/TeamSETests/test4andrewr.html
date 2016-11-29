@@ -268,7 +268,7 @@ function showValueFinal(newValue) {
 		var markersTest = new L.FeatureGroup();
         
 		accessingAAAData();
-		//getAndUseFusionData(1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA);
+		//getAndUseFusionData("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
         
 		var thr;
         var fr;
@@ -564,11 +564,13 @@ function accessingAAAdata(){
 			getAndUseFusionData(c9.citysheet);
 		}*/
 	}
-	getAndUseFusionData(c0[0].sheet);
+	getAndUseFusionData(c0[0].citysheet);
 }
 		
 function getAndUseFusionData(sheet){
-    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM [sheet]");
+	var string2=sheet;
+	var string = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA";
+	var testvar2 = httpGet(string2);
 	var lat;
 	var long;
 	var CoO;
