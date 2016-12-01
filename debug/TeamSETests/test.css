@@ -1,10 +1,10 @@
 /* The side navigation menu */
 .sidenav {
-	/* fixed so the menu doesn't extend below the map*/
+	/* fixed z-index so the menu doesn't extend below the map*/
     height: 91.5%; 
     width: 0; 
     position: absolute; 
-    z-index: 314159; 
+    z-index: 314160; 
     top: 0;
     right: 0;
     background-color: #111; 
@@ -36,7 +36,7 @@
 	z-index: 314159; 
     padding-top: 2px;
     transition: margin-right .5s;
-   	padding-left: 1050px;
+   	right:0;
    	color: black;
 
 }
