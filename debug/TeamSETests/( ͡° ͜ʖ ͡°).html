@@ -37,12 +37,22 @@ html, body, #map {
 	
 	<!-- Close button for the menu -->
 	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		
-	<a onclick="rome(0)" href="#">Rome Map 1</a>
-    <a onclick="rome(1)" href="#">Rome Map 2</a>
+	<ul>
+<!-- Rione Dropdown -->	
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Historical Maps</a>
     
+    <div class="dropdown-content" id = "ahh">
+		<a onclick="rome(0)" onclick="show1314()" href="#">Rome Map 1</a>
+    	<a onclick="rome(1)" onclick="show1314()" href="#">Rome Map 2</a>
+    </div> 
+    
+  </li>  
+</ul>
+	
 	<!-- Overlay Map opacity slider -->
-    Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
 
 <!-- Rione/region Map marker sorting -->
 <span id="rangeFinal">0</span>
@@ -73,8 +83,22 @@ html, body, #map {
       <a id="eighteen" onclick="show18()" href="#">18th Century</a>
       <a id="nineteen" onclick="show19()" href="#">19th Century</a>
       <a id="twenty" onclick="show20()" href="#">20th Century</a>
+ 
     </div> 
     
+  </li>  
+</ul>
+
+<!-- Marker sorting by Rione dropdown menu -->
+<ul>
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Sort by Rione</a>
+    
+    <div class="dropdown-content" id = "ahh">
+    
+    <a></a>
+    </div> 
+   
   </li>  
 </ul>
 
@@ -106,7 +130,7 @@ html, body, #map {
 	
 <!-- Main CSS Menu span -->
 	<div id="main">
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()" onclick="closeNav()"><img src="https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/menubutton.png" alt="menubutton.png" style="width:150px;height:100px;">
+		<span style="font-size: 30px; cursor: pointer" onclick="openNav()" onclick="closeNav()"><img src="https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/menubutton.png" alt="menubutton.png" style="width:95px;height:80px;">
 </span>
 	</div>
 	
