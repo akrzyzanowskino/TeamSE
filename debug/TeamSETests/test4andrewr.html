@@ -55,6 +55,13 @@ html, body, #map {
 					type="submit" onclick="rioneSort();" />
 			</form>
 		</a>
+			<!-- Attempt at keyword dedication button sort -->
+		</a> </a> <a>
+			<form id="form" onsubmit="return false;" action="">
+				Show Shrines by Keyword: <input type="text" id="userInput3" /> Submit: <input
+					type="submit" onclick="keywordSort();" />
+			</form>
+		</a>
 <!-- demo dropdown menu -->
 <ul>
 
@@ -268,8 +275,8 @@ function showValueFinal(newValue) {
 		var markersTest = new L.FeatureGroup();
         
 		//accessingAAAdata();
-		//getAndUseFusionData("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
-        addingtoAAA(I,Love,Vishnu,testing,beep,beep);
+		getAndUseFusionData("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+        //addingtoAAA(I,Love,Vishnu,testing,beep,beep);
 		
 		var thr;
         var fr;
@@ -315,6 +322,11 @@ function showValueFinal(newValue) {
 		function rioneSort(){
 			var input2 = document.getElementById("userInput2").value;
 			showRiones(input2);
+		}
+		
+		function keywordSort(){
+			var input3 = document.getElementById("userInput3").value;
+			showKeys(input3); //Rick Ross approved
 		}
 		var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;
 		function show1314(){
@@ -481,6 +493,49 @@ function showValueFinal(newValue) {
 			}
 		}
 		}
+		
+		function showKeys(Key){
+			var arlen=reg.length;
+			map.removeLayer(markersTest);
+			markersTest = new L.FeatureGroup();
+			for (var i=0; i<arlen; i++){
+				if(reg[i].dedication.search(Key)!=-1){
+					if(reg[i].century==13){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==14){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==15){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,blueMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==16){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,whiteMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==17){
+				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+				   map.addLayer(markersTest);
+					}
+					if(reg[i].century==18){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,yellowMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==19){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==20){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,purpleMarker);
+						   map.addLayer(markersTest);
+							}
+			}
+		}
+		}
+		
 		
 		//taking input from ui for adding a new city to the AAA spreadsheet
 function addingtoAAA(aname, alat, along, asheet, am1, am2){
