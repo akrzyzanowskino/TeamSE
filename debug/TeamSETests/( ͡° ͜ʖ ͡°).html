@@ -41,18 +41,20 @@ html, body, #map {
 <!-- Rione Dropdown -->	
   <li class="dropdown">
     <a href="#" class="dropbtn">Historical Maps</a>
+    	<!-- Overlay Map opacity sliders -->
     
     <div class="dropdown-content" id = "ahh">
 		<a onclick="rome(0)" onclick="show1314()" href="#">Rome Map 1</a>
+		    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+		
     	<a onclick="rome(1)" onclick="show1314()" href="#">Rome Map 2</a>
+    	    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+    	
     </div> 
     
   </li>  
 </ul>
 	
-	<!-- Overlay Map opacity slider -->
-    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
-    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
 
 <!-- Rione/region Map marker sorting -->
 <span id="rangeFinal">0</span>
