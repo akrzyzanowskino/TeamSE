@@ -723,7 +723,7 @@ function httpGet(theUrl)
 var markers = L.markerClusterGroup();
 function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
 	var marker = new L.Marker([Lat,Long], {icon: Color});
-	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
+	marker.bindPopup("<b>"+[Name]+"</b>"+"<p>"+[Century]+"th Century,"+" "+[Rione]+"</p>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
     markersTest.addLayer(marker);
     
 }
