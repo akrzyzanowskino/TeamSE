@@ -45,10 +45,10 @@ html, body, #map {
     	<!-- Overlay Map opacity sliders -->
     
     <div class="dropdown-content" id = "ahh">
-		<a onclick="rome(0)" href="#">Rome Map 1</a>
+		<a id = "rome1" onclick="rome(0)" href="#">Rome Map 1</a>
 		    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
 		
-    	<a onclick="rome(1)" href="#">Rome Map 2</a>
+    	<a id = "rome2" onclick="rome(1)" href="#">Rome Map 2</a>
     	    <input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
     	
     </div> 
@@ -243,19 +243,24 @@ html, body, #map {
 			if(num == 0){ 
 		    	if (map.hasLayer(romemap1)) {
 		    		map.removeLayer(romemap1);
+		    		document.getElementById("rome1").innerHTML = "RomeMap1";
 		    	}
 		    	else {
 		    		map.addLayer(romemap1);
 		    		currentMap = romemap1;
+		    		document.getElementById("rome1").innerHTML = "&#9745RomeMap1";
+		    		
 		    	}
 		    } 
 				else if (num == 1) {
 		    	if (map.hasLayer(romemap2)) {
 		    		map.removeLayer(romemap2);
+		    		document.getElementById("rome2").innerHTML = "RomeMap2";
 		    	}
 		    	else {
 		    		map.addLayer(romemap2);
 		    		currentMap = romemap2;
+		    		document.getElementById("rome2").innerHTML = "&#9745RomeMap2";
 		    	}
 		    }
 		}
