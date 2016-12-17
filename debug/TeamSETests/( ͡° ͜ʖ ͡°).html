@@ -4,17 +4,37 @@
 <head>
 <title>Test Page</title>
 
+<<<<<<< HEAD
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="../../dist/leaflet.css" />
+
+<!--  CSS Style sheets for the WebPage  -->
+
+=======
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 <!--Our webpage css -->
+>>>>>>> a17f91cf0c90701c406c0d0c1261bb79da0ffac2
 <link rel="stylesheet" href="test.css" />
 <!-- default leaftlet css -->
 <link rel="stylesheet" href="../../dist/leaflet.css" />
 <link rel="stylesheet" href="../css/screen.css" />
+<<<<<<< HEAD
+<link rel="stylesheet" href="../css/dropdown.css" />
+<link rel="shortcut icon" type="img/x-icon" href="github.com/akrzyzanowskino/TeamSE/debug/TeamSETests/markers"/>
+=======
+>>>>>>> a17f91cf0c90701c406c0d0c1261bb79da0ffac2
 <script type="text/javascript" src="../../build/deps.js"></script>
 <script src="../leaflet-include.js" type="text/javascript"></script>
 
 </head>
+<<<<<<< HEAD
+
+
+<!-- Slide Panel -->
+=======
+>>>>>>> a17f91cf0c90701c406c0d0c1261bb79da0ffac2
 
 <!-- Slide out menu Panel -->
 <style type="text/css">
@@ -33,6 +53,21 @@ html, body, #map {
 </style>
 
 <body>
+<<<<<<< HEAD
+	
+<!--Map Selection and Opacity Sliders -->
+	<div id="mySidenav" class="sidenav">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a onclick="rome(0)" href="#">RomeMap1</a>
+    	<a onclick="rome(1)" href="#">RomeMap2</a>
+ 
+	<form id="form" onsubmit="return false;" action="">
+		Enter City Name: <input type="text" id="userInput" /> 
+		<input type="submit" onclick="othername();" />
+	</form>
+
+<!-- demo drop down menu -->
+=======
 	<!--Map Selection and Opacity Slider -->
 	<div id="mySidenav" class="sidenav">
 	
@@ -74,11 +109,45 @@ html, body, #map {
 		</a>
 		
 <!-- Marker sorting by century dropdown menu -->
+>>>>>>> a17f91cf0c90701c406c0d0c1261bb79da0ffac2
 <ul>
   <li class="dropdown">
     <a href="#" class="dropbtn">Markers By Century</a>
     
     <div class="dropdown-content" id = "ahh">
+<<<<<<< HEAD
+    	<a id="fourteen" onclick="show1314()" href="#">14th and Older</a>
+		<a id ="fifteen" onclick="show15()" href="#">15th Century</a>
+      	<a id="sixteen" onclick="show16()" href="#">16th Century</a>
+      	<a id="seventeen" onclick="show17()" href="#">17th Century</a>
+      	<a id="eighteen" onclick="show18()" href="#">18th Century</a>
+      	<a id="nineteen" onclick="show19()" href="#">19th Century</a>
+      	<a id="twenty" onclick="show20()" href="#">20th Century</a>
+    </div>
+  </li>
+</ul>
+</div>
+	
+
+<div id="main">
+	<span style="font-size: 30px; cursor: pointer" onclick="openNav()" onclick="closeNav()">&#9776;
+		Menu</span>
+</div>
+
+<script type="text/javascript">
+/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+function openNav() {
+	document.getElementById("mySidenav").style.width = "250px";
+	}
+	/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+function closeNav() {
+	document.getElementById("mySidenav").style.width = "0";
+	document.getElementById("main").style.marginLeft = "0";
+	}
+</script>
+	
+<div id="map"></div>
+=======
       <a id="fourteen" onclick="show1314()" href="#">14th and Older</a>
 	  <a id ="fifteen" onclick="show15()" href="#">15th Century</a>
       <a id="sixteen" onclick="show16()" href="#">16th Century</a>
@@ -170,6 +239,7 @@ html, body, #map {
 	
 <!-- Leaflet Map Div -->
 	<div id="map"></div>
+>>>>>>> a17f91cf0c90701c406c0d0c1261bb79da0ffac2
 
 <!-- Script for opacity change -->
 	<script type="text/javascript">
