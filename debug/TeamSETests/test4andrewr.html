@@ -55,6 +55,13 @@ html, body, #map {
 					type="submit" onclick="rioneSort();" />
 			</form>
 		</a>
+			<!-- Attempt at keyword dedication button sort -->
+		</a> </a> <a>
+			<form id="form" onsubmit="return false;" action="">
+				Show Shrines by Keyword: <input type="text" id="userInput3" /> Submit: <input
+					type="submit" onclick="keywordSort();" />
+			</form>
+		</a>
 <!-- demo dropdown menu -->
 <ul>
 
@@ -78,6 +85,27 @@ html, body, #map {
       <a onclick="show19()" href="#">19th Century</a>
       <a onclick="show20()" href="#">20th Century</a>
       <a onclick="showAll()" href="#">All of the Above</a>-->
+    </div>
+  </li>
+</ul>
+
+<!-- Drop Down For new cities -->
+
+<ul>
+
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Add New City</a>
+    <div class="dropdown-content">
+      <form action="action_page.php">
+      	City:<br><input type="text" name="cityName"><br>
+ 	 	Latitude:<br><input type="text" name="Lat"><br>
+ 	 	Longitude:<br><input type="text" name="Lon"><br>
+ 	 	Spreadsheet:<br><input type="text" name="SpreadSheet"><br>
+ 	 	Map<br><input type="text" name="Map1"><br>
+ 	 	Map<br><input type="text" name="Map2"><br>
+ 	 <br>
+  	<input type="submit" onclick="addingtoAAA(cityName,Lat,Lon,SpreadSheet,Map1,Map2);">
+	</form>
     </div>
   </li>
 </ul>
@@ -191,47 +219,47 @@ function showValueFinal(newValue) {
 		var redMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_red.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var orangeMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_orange.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var yellowMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_yellow.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		var greenMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		var blueMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var purpleMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		var pinkMarker = L.icon({
 		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
 		    iconSize:     [30, 41], // size of the icon
-		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
-		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		    iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 		});
 		
 		var whiteMarker = L.icon({
@@ -245,8 +273,12 @@ function showValueFinal(newValue) {
 		marker.bindPopup("<b>ROME</b>").openPopup();
 		map.setView([ 41.9028, 12.4964 ], 14);
 		var markersTest = new L.FeatureGroup();
-        getAndUseFusionData();
-        var thr;
+        
+		//accessingAAAdata();
+		getAndUseFusionData("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+        //addingtoAAA(I,Love,Vishnu,testing,beep,beep);
+		
+		var thr;
         var fr;
         var fv;
         var sx;
@@ -254,6 +286,16 @@ function showValueFinal(newValue) {
         var eig;
         var nin;
         var ten;
+		var city0;
+		var city1;
+		var city2;
+		var city3;
+		var city4;
+		var city5;
+		var city6;
+		var city7;
+		var city8;
+		var city9;
 		L.DomEvent.on(L.DomUtil.get('b1'), 'click', function() {
 			map.addLayer(myLayerGroup);
 		});
@@ -280,6 +322,11 @@ function showValueFinal(newValue) {
 		function rioneSort(){
 			var input2 = document.getElementById("userInput2").value;
 			showRiones(input2);
+		}
+		
+		function keywordSort(){
+			var input3 = document.getElementById("userInput3").value;
+			showKeys(input3); //Rick Ross approved
 		}
 		var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;
 		function show1314(){
@@ -337,7 +384,7 @@ function showValueFinal(newValue) {
 			if(f || num==0){
 			    arlen = thr.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,pinkMarker);
 			    }
 			    arlen = fr.length;
 			    for (var i = 0; i < arlen; i++) {
@@ -367,7 +414,7 @@ function showValueFinal(newValue) {
 			if(s || num==0){
 			    arlen = sx.length;
 			    for (var i = 0; i < arlen; i++) {
-			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,whiteMarker);
+			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,redMarker);
 			    }
 			    document.getElementById("sixteen").innerHTML="&#9745;16th Century";
 			   }
@@ -412,7 +459,7 @@ function showValueFinal(newValue) {
 			for (var i=0; i<arlen; i++){
 				if(reg[i].rione==rio){
 					if(reg[i].century==13){
-						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
 						   map.addLayer(markersTest);
 									}
 					if(reg[i].century==14){
@@ -424,7 +471,7 @@ function showValueFinal(newValue) {
 						   map.addLayer(markersTest);
 									}
 					if(reg[i].century==16){
-						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,whiteMarker);
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
 						   map.addLayer(markersTest);
 									}
 					if(reg[i].century==17){
@@ -436,7 +483,7 @@ function showValueFinal(newValue) {
 						   map.addLayer(markersTest);
 							}
 					if(reg[i].century==19){
-						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,greenMarker);
 						   map.addLayer(markersTest);
 							}
 					if(reg[i].century==20){
@@ -446,9 +493,162 @@ function showValueFinal(newValue) {
 			}
 		}
 		}
-	
-function getAndUseFusionData(){
-    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+		
+		function showKeys(Key){
+			var arlen=reg.length;
+			map.removeLayer(markersTest);
+			markersTest = new L.FeatureGroup();
+			for (var i=0; i<arlen; i++){
+				if(reg[i].dedication.search(Key)!=-1){
+					if(reg[i].century==13){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==14){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==15){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,blueMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==16){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==17){
+				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+				   map.addLayer(markersTest);
+					}
+					if(reg[i].century==18){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,yellowMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==19){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,greenMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==20){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,purpleMarker);
+						   map.addLayer(markersTest);
+							}
+			}
+		}
+		}
+		
+		
+		//taking input from ui for adding a new city to the AAA spreadsheet
+function addingtoAAA(aname, alat, along, asheet, am1, am2){
+	var testvar4= httpPost("https://www.googleapis.com/sheets/v2/query?sql=SELECT CityName CityLatitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1URffs3sPtmHSYdv0dlcG3Mf7dnEw5alho2DOM7gX&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+	var u = JSON.parse(testvar4);
+	var arowDat= u["rows"];
+	var aarrayLength=arowDat.length;
+	var cname;
+	var clat;
+	var clong;
+	var sheet;
+	var m1;
+	var m2;
+	arowDat[aarayLength+1][0]=aname;
+	arowDat[aarayLength+1][1]=alat;
+	arowDat[aarayLength+1][2]=along;
+	arowDat[aarayLength+1][3]=asheet;
+	arowDat[aarayLength+1][4]=am1;
+	arowDat[aarayLength+1][5]=am2;
+	accessingAAAdata();
+} 	
+		
+		//reading all the cities from AAA which can then have their individual marker data manipulated by a modified getAndUsedFusionData() method
+function accessingAAAdata(){
+	var testvar3 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT CityName, CityLatitude, CityLongitude, LinktoCitySpreadsheet, WarpedMap1, WarpedMap2, WarpedMap3, WarpedMap4 FROM 1URffs3sPtmHSYdv0dlcG3Mf7dnEw5alho2DOM7gX&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+	var cname;
+	var clat;
+	var clong;
+	var sheet;
+	var m1;
+	var m2;
+	var m3;
+	var m4;
+	var c0=[];
+	var c1=[];
+	var c2=[];
+	var c3=[];
+	var c4=[];
+	var c5=[];
+	var c6=[];
+	var c7=[];
+	var c8=[];
+	var c9=[];
+	var u = JSON.parse(testvar3);
+	var arowDat= u["rows"];
+	var aarrayLength=arowDat.length;
+	for (var i=0; i<aarrayLength; i++){
+		cname= arowDat[i][0];
+		clat= arowDat[i][1];
+		clong= arowDat[i][2];
+		sheet= arowDat[i][3];
+		m1= arowDat[i][4];
+		m2= arowDat[i][5];
+		var brr = {cityname:cname,citylatitude:clat, citylongitude:clong,citysheet:sheet,citymap1:m1,citymap2:m2};
+		if (i==0){
+			c0.push(brr);
+			city0=c0;
+			getAndUseFusionData(city0[0].citysheet);
+		}
+		if (i==1){
+			c1.push(brr);
+			city1=c1;
+			getAndUseFusionData(city1[0].citysheet);
+		}
+		if (i==2){
+			c2.push(brr);
+			city2=c2;
+			getAndUseFusionData(city2[0].citysheet);
+		}
+		if (i==3){
+			c3.push(brr);
+			city3=c3;
+			getAndUseFusionData(city3[0].citysheet);
+		}
+		if (i==4){
+			c4.push(brr);
+			city4=c4;
+			getAndUseFusionData(city4[0].citysheet);
+		}
+		if (i==5){
+			c5.push(brr);
+			city5=c5;
+			getAndUseFusionData(city5[0].citysheet);
+		}
+		if (i==6){
+			c6.push(brr);
+			city6=c6;
+			getAndUseFusionData(city6[0].citysheet);
+		}
+		if (i==7){
+			c7.push(brr);
+			city7=c7;
+			getAndUseFusionData(city7[0].citysheet);
+		}
+		if (i==8){
+			c8.push(brr);
+			city8=c8;
+			getAndUseFusionData(city8[0].citysheet);
+		}
+		if (i==9){
+			c9.push(brr);
+			city9=c9;
+			getAndUseFusionData(city9[0].citysheet);
+		}
+	}	
+	//city0=c0;
+	//getAndUseFusionData(city0[0].citysheet);
+}
+		
+function getAndUseFusionData(sheet){
+	//var string2=sheet;
+	var string = "https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AlzaSyBxp4bTSIL7itaU-XCqRHcK7sggyOjbe60";
+	var testvar2 = httpGet(sheet);
 	var lat;
 	var long;
 	var CoO;
@@ -522,8 +722,8 @@ function httpGet(theUrl)
 }
 var markers = L.markerClusterGroup();
 function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
-	var marker = new L.marker([Lat,Long],{icon: Color});
-	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
+	var marker = new L.Marker([Lat,Long], {icon: Color});
+	marker.bindPopup("<b>"+[Name]+"</b>"+"<p>"+[Century]+"th Century,"+" "+[Rione]+"</p>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
     markersTest.addLayer(marker);
     
 }

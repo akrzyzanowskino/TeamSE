@@ -1,10 +1,10 @@
 /* The side navigation menu */
 .sidenav {
-	/* fixed so the menu doesn't extend below the map*/
+	/* fixed z-index so the menu doesn't extend below the map*/
     height: 91.5%; 
     width: 0; 
     position: absolute; 
-    z-index: 314159; 
+    z-index: 314160; 
     top: 0;
     right: 0;
     background-color: #111; 
@@ -24,7 +24,7 @@
 }
 
 .sidenav .closebtn {
-    position: fixed;
+    position: absolute;
     top: 0;
     right: 25px;
     font-size: 36px;
@@ -36,11 +36,11 @@
 	z-index: 314159; 
     padding-top: 2px;
     transition: margin-right .5s;
-   	padding-left: 50px;
+   	right:0;
    	color: black;
 
 }
-   }
+   
 
 ul {
     list-style-type: none;
@@ -74,7 +74,7 @@ li.dropdown {
     display: none;
     position: absolute;
     background-color: #ffffff;
-    min-width: 260px;
+    min-width: 300px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 
@@ -90,8 +90,5 @@ li.dropdown {
 
 .dropdown:hover .dropdown-content {
     display: block;
-}
-
-
-
+    
 }
