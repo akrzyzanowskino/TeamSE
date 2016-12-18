@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test Page</title>
+
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="../../dist/leaflet.css" />
+
+<!--  CSS Style sheets for the WebPage  -->
+
+<link rel="stylesheet" href="test.css" />
+<link rel="stylesheet" href="../css/screen.css" />
+<link rel="stylesheet" href="../css/dropdown.css" />
+<link rel="shortcut icon" type="img/x-icon" href="github.com/akrzyzanowskino/TeamSE/debug/TeamSETests/markers"/>
+<script type="text/javascript" src="../../build/deps.js"></script>
+<script src="../leaflet-include.js" type="text/javascript"></script>
+</head>
+
+
+<!-- Slide Panel -->
+
+<style type="text/css">
+body {
+	font-family: "Helvetica", sans-serif;
+	padding: 0;
+	margin: 0;
+}
+html, body, #map {
+	height: 100%;
+	width: 100%;
+}
+</style>
+<body>
+	
+	<!--Map Selection and Opacity Sliders -->
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+				<a onclick="rome(0)" href="#">RomeMap1</a>
+    <a onclick="rome(1)" href="#">RomeMap2</a>
+   
+    Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showValueFinal(this.value)" />
+	<span id="rangeFinal">0</span>
+	
+		</a> </a> <a>
+			<form id="form" onsubmit="return false;" action="">
+				Enter City Name: <input type="text" id="userInput" /> Submit: <input
+					type="submit" onclick="othername();" />
+			</form>
+			
+			
+<!-- Attempt at Rione button sort -->
+		</a> </a> <a>
+			<form id="form" onsubmit="return false;" action="">
+				Show Shrines by Rione: <input type="text" id="userInput2" /> Submit: <input
+					type="submit" onclick="rioneSort();" />
+			</form>
+		</a> -->
+
+
+<!-- demo dropdown menu -->
+<ul>
+
+  <li class="dropdown">
+    <a href="#" class="dropbtn">Markers By Century</a>
+    <div class="dropdown-content" id = "ahh">
+      <a id="fourteen" onclick="show1314()" href="#">14th and Older</a>
+	  <a id ="fifteen" onclick="show15()" href="#">15th Century</a>
+      <a id="sixteen" onclick="show16()" href="#">16th Century</a>
+      <a id="seventeen" onclick="show17()" href="#">17th Century</a>
+      <a id="eighteen" onclick="show18()" href="#">18th Century</a>
+      <a id="nineteen" onclick="show19()" href="#">19th Century</a>
+      <a id="twenty" onclick="show20()" href="#">20th Century</a>
+    <!-- <div class="dropdown-content">
+    <a onclick="show13()" href="#">13th Century</a>
+    <a onclick="show14()" href="#">14th Century</a>
+    <a onclick="show15()" href="#">15th Century</a>
+    <a onclick="show16()" href="#">16th Century</a>
+      <a onclick="show17()" href="#">17th Century</a>
+      <a onclick="show18()" href="#">18th Century</a>
+      <a onclick="show19()" href="#">19th Century</a>
+      <a onclick="show20()" href="#">20th Century</a>
+      <a onclick="showAll()" href="#">All of the Above</a>-->
+    </div>
+  </li>
+</ul>
+	
+	</div>
+	
+
+	<div id="main">
+		<span style="font-size: 30px; cursor: pointer" onclick="openNav()" onclick="closeNav()">&#9776;
+			Menu</span>
+
+	</div>
+
+	<script type="text/javascript">
+		/* Set the width of the side navigation to 250px and the left margin of the page content to 250px */
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			}
+		
+		/* Set the width of the side navigation to 0 and the left margin of the page content to 0 */
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+		}
+	</script>
+	<div id="map"></div>
+
+
+<script type="text/javascript">
+function showValueFinal(newValue) {
+		document.getElementById("rangeFinal").innerHTML=1-newValue/100;
+		currentMap.setOpacity(1-newValue/100);
+}
+</script>
+	<script type="text/javascript">
+		var map;
+		var myLayerGroup = new L.LayerGroup();
+		// set up the map
+		map = new L.Map('map', {
+			preferCanvas : true
+		});
+		// create the tile layer with correct attribution
+		var osmUrl = 'http://a.tile.openstreetmap.org/{z}/{x}/{y}.png';
+		var osmAttrib = 'Map data © OpenStreetMap contributors';
+		var osm = new L.TileLayer(osmUrl, {
+			minZoom : 1,
+			maxZoom : 17,
+			attribution : osmAttrib,
+			detectRetina : true
+		});
+		map.addLayer(osm);
+		map.fitBounds(new L.LatLngBounds([ 51, 7 ], [ 51, 7 ]));
+		var testing = new L.tileLayer(
+				'http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}',
+				{
+					attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://mapbox.com">Mapbox</a>',
+					maxZoom : 18,
+					id : 'your.mapbox.project.id',
+					accessToken : 'your.mapbox.public.access.token'
+				})
+		var testing1 = new L.tileLayer(
+				'http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}',
+				{
+					attribution : 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery � <a href="http://mapbox.com">Mapbox</a>',
+					maxZoom : 18,
+					id : 'your.mapbox.project.id',
+					accessToken : 'your.mapbox.public.access.token'
+				});
+		
+		var londonmap1 = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		})
+		var romemap1 = new L.tileLayer('http://mapwarper.net/maps/tile/9175/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		//Vishnu
+		var romemap2 = new L.tileLayer('http://mapwarper.net/maps/tile/15087/{z}/{x}/{y}.png?access_token={accessToken}', {
+		    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+		    maxZoom: 18,
+		    id: 'your.mapbox.project.id',
+		    accessToken: 'your.mapbox.public.access.token'
+		});
+		var currentMap
+		
+		function rome(num) {
+			if(num == 0){ 
+		    	if (map.hasLayer(romemap1)) {
+		    		map.removeLayer(romemap1);
+		    	}
+		    	else {
+		    		map.addLayer(romemap1);
+		    		currentMap = romemap1;
+		    	}
+		    } else if (num == 1) {
+		    	if (map.hasLayer(romemap2)) {
+		    		map.removeLayer(romemap2);
+		    	}
+		    	else {
+		    		map.addLayer(romemap2);
+		    		currentMap = romemap2;
+		    	}
+		    }
+		}
+		
+		var redMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_red.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var orangeMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_orange.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var yellowMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_yellow.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var greenMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_green.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var blueMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_blue.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var purpleMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		var pinkMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_pink.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var whiteMarker = L.icon({
+		    iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_white.png',
+		    iconSize:     [30, 41], // size of the icon
+		    iconAnchor:   [22, 94], // point of the icon which will correspond to marker's location
+		    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
+		});
+		
+		var marker = L.marker([ 41.9028, 12.4964 ]).addTo(map);
+		marker.bindPopup("<b>ROME</b>").openPopup();
+		map.setView([ 41.9028, 12.4964 ], 14);
+		var markersTest = new L.FeatureGroup();
+        getAndUseFusionData();
+        var thr;
+        var fr;
+        var fv;
+        var sx;
+        var svn;
+        var eig;
+        var nin;
+        var ten;
+		L.DomEvent.on(L.DomUtil.get('b1'), 'click', function() {
+			map.addLayer(myLayerGroup);
+		});
+		L.DomEvent.on(L.DomUtil.get('b2'), 'click', function() {
+			map.removeLayer(myLayerGroup);
+		});
+		function othername() {
+			var input = document.getElementById("userInput").value;
+			if (input === "Rome") {
+				map.setView([ 41.9028, 12.4964 ], 13, {
+					animation : true
+				});
+			}
+			if (input === "London") {
+				map.setView([ 51.5074, -0.1278 ], 13, {
+					animation : true
+				});
+			}
+		};
+		function updateOpacity(value) {
+			testing.opacity(value);
+		};
+		
+		function rioneSort(){
+			var input2 = document.getElementById("userInput2").value;
+			showRiones(input2);
+		}
+		var f =false,ff = false,s = false,ss = false,e = false,n = false,t = false;
+		function show1314(){
+			f=!f;
+				showMarkers(1314);
+		}
+		function show13(){
+			showMarkers(13);
+		}
+		function show14(){
+			showMarkers(14);
+		}
+		function show15(){
+			ff=!ff;
+				showMarkers(15);
+		}
+		function show16(){
+			s=!s;
+				showMarkers(16);
+		}
+ 		function show17() {
+			ss=!ss;
+ 			showMarkers(17);
+		};
+		function show18() {
+			e=!e;
+				showMarkers(18);
+		};		
+		function show19() {
+			n=!n;
+				showMarkers(19);
+		};
+		function show20() {
+			t=!t;
+				showMarkers(20);
+		};
+		function showAll() {
+			showMarkers(0);
+		};		
+		
+		function setDefaultNames(){
+			 document.getElementById("fourteen").innerHTML="14th and Older";
+			 				document.getElementById("fifteen").innerHTML="15th Century";
+			 			    document.getElementById("seventeen").innerHTML="17th Century";
+			 			    document.getElementById("sixteen").innerHTML="16th Century";
+			 			    document.getElementById("eighteen").innerHTML="18th Century";
+			 			    document.getElementById("nineteen").innerHTML="19th Century";
+			 			    document.getElementById("twenty").innerHTML="20th Century";
+		};
+		function showMarkers(num) {
+			var arlen;
+			map.removeLayer(markersTest);
+			markersTest = new L.FeatureGroup();
+			setDefaultNames();
+			if(f || num==0){
+			    arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			    }
+			    arlen = fr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
+			    }
+			    document.getElementById("fourteen").innerHTML="&#9745;14th and Older";
+			   }
+			if(num==13 || num==0){
+			    arlen = thr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(thr[i].latitude,thr[i].longitude,thr[i].dedication,thr[i].century,thr[i].rione,thr[i].roma,thr[i].image,redMarker);
+			    }
+			   }
+			if(num==14 || num==0){
+			    arlen = fr.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fr[i].latitude,fr[i].longitude,fr[i].dedication,fr[i].century,fr[i].rione,fr[i].roma,fr[i].image,pinkMarker);
+			    }
+			   }
+			if(ff || num==0){
+			    arlen = fv.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(fv[i].latitude,fv[i].longitude,fv[i].dedication,fv[i].century,fv[i].rione,fv[i].roma,fv[i].image,blueMarker);
+			    }
+			    document.getElementById("fifteen").innerHTML="&#9745;15th Century";
+			   }
+			if(s || num==0){
+			    arlen = sx.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(sx[i].latitude,sx[i].longitude,sx[i].dedication,sx[i].century,sx[i].rione,sx[i].roma,sx[i].image,whiteMarker);
+			    }
+			    document.getElementById("sixteen").innerHTML="&#9745;16th Century";
+			   }
+			if(ss || num==0){
+			    arlen = svn.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(svn[i].latitude,svn[i].longitude,svn[i].dedication,svn[i].century,svn[i].rione,svn[i].roma,svn[i].image,orangeMarker);
+			    }
+			    document.getElementById("seventeen").innerHTML="&#9745;17th Century";
+			   }
+			   
+			   if(n || num==0){
+			    arlen = nin.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(nin[i].latitude,nin[i].longitude,nin[i].dedication,nin[i].century,nin[i].rione,nin[i].roma,nin[i].image,greenMarker);
+			    }
+			    document.getElementById("nineteen").innerHTML="&#9745;19th Century";
+			   }
+			   if(t || num==0){
+			    arlen = ten.length;
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(ten[i].latitude,ten[i].longitude,ten[i].dedication,ten[i].century,ten[i].rione,ten[i].roma,ten[i].image,purpleMarker);
+			    }
+			    document.getElementById("twenty").innerHTML="&#9745;20th Century";
+			   }
+			   if(e || num==0){
+			    arlen = eig.length;
+			    document.getElementById("eighteen").innerHTML="&#9745;18th Century";
+			    for (var i = 0; i < arlen; i++) {
+			         addMarker(eig[i].latitude,eig[i].longitude,eig[i].dedication,eig[i].century,eig[i].rione,eig[i].roma,eig[i].image,yellowMarker);
+			   				   map.addLayer(markersTest);	
+			    }
+			   }
+			 
+			   map.addLayer(markersTest);
+			   
+		};							
+		function showRiones(rio){
+			var arlen=reg.length;
+			map.removeLayer(markersTest);
+			markersTest = new L.FeatureGroup();
+			for (var i=0; i<arlen; i++){
+				if(reg[i].rione==rio){
+					if(reg[i].century==13){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,redMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==14){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,pinkMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==15){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,blueMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==16){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,whiteMarker);
+						   map.addLayer(markersTest);
+									}
+					if(reg[i].century==17){
+				addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+				   map.addLayer(markersTest);
+					}
+					if(reg[i].century==18){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,yellowMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==19){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,orangeMarker);
+						   map.addLayer(markersTest);
+							}
+					if(reg[i].century==20){
+						addMarker(reg[i].latitude,reg[i].longitude,reg[i].dedication,reg[i].century,reg[i].rione,reg[i].roma,reg[i].image,purpleMarker);
+						   map.addLayer(markersTest);
+							}
+			}
+		}
+		}
+	
+function getAndUseFusionData(){
+    var testvar2 = httpGet("https://www.googleapis.com/fusiontables/v2/query?sql=SELECT Latitude, Longitude, Dedication, CenturyofOrigin, Rione, RomaItLink, ImageDataLink FROM 1s3XCySRLoCMU10Jtf_dOxT6sZtnUkKQ_w0mDatBT&key=AIzaSyCad0MmaDxN4vBDl0OwQl_pW5f-KPssUgA");
+	var lat;
+	var long;
+	var CoO;
+	var RiL;
+	var Rio;
+	var Ded;
+	var IDL;
+	var t = JSON.parse(testvar2);
+	var rowData = t["rows"];
+	var arrayLength = rowData.length;
+    var three=[];
+	var four=[];
+	var five= [];
+	var six = [];
+	var seven = [];
+    var eight = [];
+    var nine = [];
+    var twent = [];
+    var region = [];
+	for (var i = 0; i < arrayLength; i++) {
+		lat = rowData[i][0];
+		long = rowData[i][1];
+		Ded = rowData[i][2];
+		CoO = rowData[i][3];
+		Rio = rowData[i][4];
+		RiL = rowData[i][5];
+		IDL = rowData[i][6];
+		var arr = {latitude:lat, longitude:long,dedication:Ded,century:CoO,rione:Rio, roma:RiL, image:IDL};
+		if(CoO==13)
+			three.push(arr);
+			region.push(arr);
+		if(CoO==14)
+			four.push(arr);
+			region.push(arr);
+		if(CoO==15)
+			five.push(arr);
+			region.push(arr);
+		if(CoO==16)
+			six.push(arr);
+			region.push(arr);
+			if(CoO==17)
+				seven.push(arr);
+				region.push(arr);
+			if(CoO==18){
+				eight.push(arr);
+				region.push(arr);
+			}
+			if(CoO==19)
+				nine.push(arr);
+				region.push(arr);
+			if(CoO==20)
+				twent.push(arr);
+				region.push(arr);
+	}
+	thr=three;
+	fr=four;
+	fv=five;
+	sx=six;
+	svn = seven;
+	eig = eight;
+	nin = nine;
+	ten = twent;
+	reg = region;
+}
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+var markers = L.markerClusterGroup();
+function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
+	var marker = new L.marker([Lat,Long],{icon: Color});
+	marker.bindPopup("<b>"+[Name]+[Century]+"th Century"+[Rione]+"</b>"+"<p>More Info: "+Link.link([Link])+"</p>"+"<p>Image if available:"+Image.link([Image])+"</p>").openPopup();	
+    markersTest.addLayer(marker);
+    
+}
+	</script>
+
+
+	<script type="text/javascript">
+		function showValue(newValue) {
+			document.getElementById("range").innerHTML = 1 - newValue / 100;
+			testing1.setOpacity(1 - newValue / 100);
+		}
+	</script>
+	<script type="text/javascript">
+		function showValueL(newValue) {
+			document.getElementById("rangeL").innerHTML = 1 - newValue / 100;
+			testing.setOpacity(1 - newValue / 100);
+		}
+	</script>
+
+
+	<script type="text/javascript">
+		function handleClick(cb) {
+			if (document.getElementById('cbox1').checked) {
+				map.addLayer(testing1);
+			} else {
+				map.removeLayer(testing1);
+			}
+		};
+	</script>
+
+
+	<script type="text/javascript">
+		function handleClickL(cb) {
+			if (document.getElementById('cbox2').checked) {
+				map.addLayer(testing);
+			} else {
+				map.removeLayer(testing);
+			}
+		};
+	</script>
+
+
+</body>
+
+</html>
