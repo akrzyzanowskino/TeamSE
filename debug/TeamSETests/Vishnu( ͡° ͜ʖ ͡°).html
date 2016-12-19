@@ -27,7 +27,6 @@ body {
 }
 /*The size of the leaflet map*/
 /*100% height and width makes the map fill the browser window compleatly */
-
 html, body, #map {
 	height: 100%;
 	width: 100%;
@@ -92,7 +91,7 @@ Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showV
   </li>  
 </ul>
 
-<!-- Marker sorting by Rione dropdown menu -->
+<!-- Marker sorting by Rione dropdown menu 
 <ul>
   <li class="dropdown">
     <a href="#" class="dropbtn">Sort by Rione</a>
@@ -102,7 +101,7 @@ Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showV
     </div> 
    
   </li>  
-</ul>
+</ul>-->
 
 <!-- Attempt at keyword dedication button sort -->
 		</a> </a> <a>
@@ -200,7 +199,6 @@ Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showV
 		});
 		map.addLayer(osm);
 		map.fitBounds(new L.LatLngBounds([ 51, 7 ], [ 51, 7 ]));
-
 		<!-- London Map1 -->
 			var londonmap1 = new L.tileLayer('http://mapwarper.net/maps/tile/14761/{z}/{x}/{y}.png?access_token={accessToken}', {
 				attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -274,7 +272,6 @@ Opacity<input type="range" min="0" max="100" value="0" step="10" onchange="showV
 		    	}
 		    }
 		}
-
 		function london(num) {
 			if(num == 0){ 
 		    	if (map.hasLayer(londonmap1)) {
@@ -310,14 +307,12 @@ var redMarker = L.icon({
     iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
     popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 });
-
 var orangeMarker = L.icon({
     iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_orange.png',
     iconSize:     [30, 41], // size of the icon
     iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
     popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 });
-
 var yellowMarker = L.icon({
     iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_yellow.png',
     iconSize:     [30, 41], // size of the icon
@@ -336,7 +331,6 @@ var blueMarker = L.icon({
     iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
     popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 });
-
 var purpleMarker = L.icon({
     iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_purple.png',
     iconSize:     [30, 41], // size of the icon
@@ -349,7 +343,6 @@ var pinkMarker = L.icon({
     iconAnchor:   [17.34,40.59], // point of the icon which will correspond to marker's location
     popupAnchor:  [-2.38, -32.8] // point from which the popup should open relative to the iconAnchor
 });
-
 var whiteMarker = L.icon({
     iconUrl: 'https://raw.githubusercontent.com/akrzyzanowskino/TeamSE/master/debug/TeamSETests/markers/marker_white.png',
     iconSize:     [30, 41], // size of the icon
@@ -730,7 +723,6 @@ function getAndUseFusionData(){
 	ten = twent;
 	reg = region;
 }
-
 <!--Get script for read-in data-->
 function httpGet(theUrl)
 {
@@ -747,14 +739,9 @@ function addMarker(Lat,Long,Name,Century,Rione,Link,Image,Color){
     markersTest.addLayer(marker);
     
 }
-
-
 </script>
 
 <script type="text/javascript">
-
-
-
 </script>
 
 </body>
